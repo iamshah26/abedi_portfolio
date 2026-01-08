@@ -32,6 +32,22 @@
     }
   </script>
 
+  <!-- ============ SUBMIT LEAD FORM CONVERSION SNIPPET ============ -->
+  <script>
+    function gtag_report_lead_conversion(url) {
+      var callback = function () {
+        if (typeof (url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+        'send_to': 'AW-17860855267/L1TqCOyqr98bEOOL3MRC',
+        'event_callback': callback
+      });
+      return false;
+    }
+  </script>
+
   <!-- ================= BASIC META ================= -->
   <meta charset="UTF-8" />
   <link rel="icon" href="/favicon.ico" />

@@ -51,7 +51,7 @@ export function trackWhatsAppClick(whatsappUrl) {
 }
 
 /**
- * Track form submission conversion
+ * Track form submission conversion (Click to Call)
  * Call this after a successful form submission
  */
 export function trackFormSubmit() {
@@ -62,6 +62,21 @@ export function trackFormSubmit() {
 
   gtag('event', 'conversion', {
     'send_to': 'AW-17860855267/E5GJCPGiq98bEOOL3MRC'
+  });
+}
+
+/**
+ * Track lead form submission conversion
+ * Use this specifically for lead generation form submissions
+ */
+export function trackLeadFormSubmit() {
+  if (typeof gtag === 'undefined') {
+    console.warn('Google Tag Manager not loaded');
+    return;
+  }
+
+  gtag('event', 'conversion', {
+    'send_to': 'AW-17860855267/L1TqCOyqr98bEOOL3MRC'
   });
 }
 

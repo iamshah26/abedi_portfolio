@@ -117,7 +117,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { trackPhoneClick, trackFormSubmit } from "../utils/tracking.js";
+import { trackPhoneClick, trackFormSubmit, trackLeadFormSubmit } from "../utils/tracking.js";
 
 const titleVisible = ref(false);
 const subtitleVisible = ref(false);
@@ -150,7 +150,10 @@ const handleCallRequest = () => {
       }`
   );
 
-  // Track conversion (form submission)
+  // Track lead form conversion (for lead generation)
+  trackLeadFormSubmit();
+  
+  // Also track regular form submission conversion
   trackFormSubmit();
 
   // Open WhatsApp with pre-filled message
