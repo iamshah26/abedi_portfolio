@@ -6,7 +6,7 @@
       <div class="gradient-orb orb-3"></div>
     </div>
     <div class="hero-content" :class="{ 'animate-in': isVisible }">
-      <div class="hero-greeting">👋 Hey, I'm</div>
+      <div class="hero-greeting">👋 Hi, I'm</div>
       <h1 class="hero-headline">
         <span class="name-highlight">Syed Ali Haider Abedi</span>
       </h1>
@@ -171,6 +171,7 @@ const typeText = () => {
 .hero-greeting {
   font-size: clamp(1rem, 2vw, 1.2rem);
   margin-bottom: 1rem;
+  margin-top: 3rem;
   opacity: 0.9;
   animation: fadeInUp 0.8s ease 0.2s both;
 }
@@ -378,6 +379,7 @@ const typeText = () => {
   
   .hero-greeting {
     font-size: 0.95rem;
+    margin-top: 2rem;
   }
   
   .hero-headline {

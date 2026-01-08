@@ -1,15 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Syed Ali Haider Abedi - Digital Solutions Provider. Web Development, Mobile Apps, AI Automation, Digital Marketing, and SaaS Platforms.">
-    <meta name="keywords" content="Web Development, Mobile Apps, AI Automation, Digital Marketing, SaaS, Full Stack Developer">
-    <title>Syed Ali Haider Abedi | Digital Solutions Provider</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <!-- ================= GOOGLE ADS BASE TAG ================= -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17860855267"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'AW-17860855267');
+
+    // ================= GOOGLE ANALYTICS 4 (GA4) =================
+    // TODO: Replace 'G-XXXXXXXXXX' with your actual GA4 Measurement ID
+    // Uncomment and add your GA4 ID when ready:
+    // gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- ============ CLICK TO CALL CONVERSION SNIPPET ============ -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof (url) !== 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+        'send_to': 'AW-17860855267/E5GJCPGiq98bEOOL3MRC',
+        'event_callback': callback
+      });
+      return false;
+    }
+  </script>
+
+  <!-- ================= BASIC META ================= -->
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+    content="Syed Ali Haider Abedi - Digital Solutions Provider. Web Development, Mobile Apps, AI Automation, Digital Marketing, and SaaS Platforms." />
+
+  <meta name="keywords"
+    content="Web Development, Mobile Apps, AI Automation, Digital Marketing, SaaS, Full Stack Developer, Vue.js, Angular, Node.js, .NET" />
+
+  <!-- ================= OPEN GRAPH ================= -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://abedi-portfolio.vercel.app/">
+  <meta property="og:title" content="Syed Ali Haider Abedi | Digital Solutions Provider">
+  <meta property="og:description"
+    content="Building Digital Products That Scale Businesses. Web, Apps, AI Automation & SaaS Solutions.">
+  <meta property="og:image" content="https://abedi-portfolio.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- ================= TWITTER ================= -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://abedi-portfolio.vercel.app/">
+  <meta property="twitter:title" content="Syed Ali Haider Abedi | Digital Solutions Provider">
+  <meta property="twitter:description"
+    content="Building Digital Products That Scale Businesses. Web, Apps, AI Automation & SaaS Solutions.">
+  <meta property="twitter:image" content="https://abedi-portfolio.vercel.app/og-image.png">
+
+  <!-- ================= LINKEDIN ================= -->
+  <meta property="og:image:secure_url" content="https://abedi-portfolio.vercel.app/og-image.png">
+
+  <title>Syed Ali Haider Abedi | Digital Solutions Provider</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

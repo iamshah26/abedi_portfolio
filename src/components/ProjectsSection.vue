@@ -2,7 +2,7 @@
   <section id="projects" class="projects-section">
     <div class="container">
       <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        <span class="title-number">03.</span> Featured Projects
+Featured Projects
       </h2>
       <p class="section-subtitle" :class="{ 'animate-in': subtitleVisible }">
         Some of my recent work that I'm proud of

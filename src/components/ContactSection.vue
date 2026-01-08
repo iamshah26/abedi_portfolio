@@ -2,12 +2,13 @@
   <section id="contact" class="contact-section">
     <div class="container">
       <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        <span class="title-number">06.</span> Let's Work Together
+        Let's Work Together
       </h2>
       <p class="section-subtitle" :class="{ 'animate-in': subtitleVisible }">
-        Have a project in mind? I'd love to hear about it. Let's create something amazing together!
+        Have a project in mind? I'd love to hear about it. Let's create
+        something amazing together!
       </p>
-      
+
       <div class="contact-content">
         <div class="contact-info">
           <a href="mailto:haiderabedi26@gmail.com" class="contact-link">
@@ -17,24 +18,38 @@
               <span class="contact-value">haiderabedi26@gmail.com</span>
             </div>
           </a>
-          
-          <a href="tel:+923367048278" class="contact-link">
+
+          <a
+            href="tel:+923367048278"
+            @click.prevent="handlePhoneClick"
+            class="contact-link"
+          >
             <div class="contact-icon">📱</div>
             <div class="contact-text">
               <span class="contact-label">Phone</span>
               <span class="contact-value">+92 336 7048278</span>
             </div>
           </a>
-          
-          <a href="https://www.linkedin.com/in/syed-ali-haider-abedi-09a743233/" target="_blank" rel="noopener noreferrer" class="contact-link">
+
+          <a
+            href="https://www.linkedin.com/in/syed-ali-haider-abedi-09a743233/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >
             <div class="contact-icon">💼</div>
             <div class="contact-text">
               <span class="contact-label">LinkedIn</span>
               <span class="contact-value">Connect with me</span>
             </div>
           </a>
-          
-          <a href="https://github.com/iamshah26" target="_blank" rel="noopener noreferrer" class="contact-link">
+
+          <a
+            href="https://github.com/iamshah26"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >
             <div class="contact-icon">💻</div>
             <div class="contact-text">
               <span class="contact-label">GitHub</span>
@@ -42,46 +57,47 @@
             </div>
           </a>
         </div>
-        
+
         <div class="contact-cta">
           <h3>Schedule a Discovery Call</h3>
           <p>
-            Fill out the form below and I'll contact you on WhatsApp to schedule a free 30-minute discovery call.
+            Fill out the form below and I'll contact you on WhatsApp to schedule
+            a free 30-minute discovery call.
           </p>
           <form @submit.prevent="handleCallRequest" class="call-form">
             <div class="form-row">
               <div class="form-group">
-                <input 
-                  type="text" 
-                  v-model="callForm.name" 
-                  placeholder="Your Name" 
+                <input
+                  type="text"
+                  v-model="callForm.name"
+                  placeholder="Your Name"
                   required
                   class="form-input"
                 />
               </div>
               <div class="form-group">
-                <input 
-                  type="email" 
-                  v-model="callForm.email" 
-                  placeholder="Your Email" 
+                <input
+                  type="email"
+                  v-model="callForm.email"
+                  placeholder="Your Email"
                   required
                   class="form-input"
                 />
               </div>
             </div>
             <div class="form-group">
-              <input 
-                type="tel" 
-                v-model="callForm.phone" 
-                placeholder="Phone Number (with country code)" 
+              <input
+                type="tel"
+                v-model="callForm.phone"
+                placeholder="Phone Number (with country code)"
                 required
                 class="form-input"
               />
             </div>
             <div class="form-group">
-              <textarea 
-                v-model="callForm.message" 
-                placeholder="Tell me about your project or what you'd like to discuss..." 
+              <textarea
+                v-model="callForm.message"
+                placeholder="Tell me about your project or what you'd like to discuss..."
                 rows="4"
                 class="form-input"
               ></textarea>
@@ -100,52 +116,66 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
+import { trackPhoneClick, trackFormSubmit } from "../utils/tracking.js";
 
-const titleVisible = ref(false)
-const subtitleVisible = ref(false)
+const titleVisible = ref(false);
+const subtitleVisible = ref(false);
 
 const callForm = ref({
-  name: '',
-  email: '',
-  phone: '',
-  message: ''
-})
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+});
+
+const handlePhoneClick = (event) => {
+  event.preventDefault();
+  trackPhoneClick("tel:+923367048278");
+  // Allow default behavior after tracking (opens phone dialer)
+  window.location.href = "tel:+923367048278";
+};
 
 const handleCallRequest = () => {
-  const whatsappNumber = '923367048278' // Your WhatsApp number without +
+  const whatsappNumber = "923367048278"; // Your WhatsApp number without +
   const message = encodeURIComponent(
     `👋 Hello! I'm interested in scheduling a discovery call.\n\n` +
-    `📋 Details:\n` +
-    `Name: ${callForm.value.name}\n` +
-    `Email: ${callForm.value.email}\n` +
-    `Phone: ${callForm.value.phone}\n\n` +
-    `💬 Message:\n${callForm.value.message || 'I would like to discuss my project requirements.'}`
-  )
-  
+      `📋 Details:\n` +
+      `Name: ${callForm.value.name}\n` +
+      `Email: ${callForm.value.email}\n` +
+      `Phone: ${callForm.value.phone}\n\n` +
+      `💬 Message:\n${
+        callForm.value.message ||
+        "I would like to discuss my project requirements."
+      }`
+  );
+
+  // Track conversion (form submission)
+  trackFormSubmit();
+
   // Open WhatsApp with pre-filled message
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
-  window.open(whatsappUrl, '_blank')
-  
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+  window.open(whatsappUrl, "_blank");
+
   // Reset form after a short delay
   setTimeout(() => {
     callForm.value = {
-      name: '',
-      email: '',
-      phone: '',
-      message: ''
-    }
-  }, 500)
-}
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    };
+  }, 500);
+};
 
 onMounted(() => {
   setTimeout(() => {
-    titleVisible.value = true
-  }, 200)
+    titleVisible.value = true;
+  }, 200);
   setTimeout(() => {
-    subtitleVisible.value = true
-  }, 400)
-})
+    subtitleVisible.value = true;
+  }, 400);
+});
 </script>
 
 <style scoped>
@@ -158,7 +188,7 @@ onMounted(() => {
 }
 
 .contact-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -10%;
@@ -170,7 +200,8 @@ onMounted(() => {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.5;
   }
@@ -209,7 +240,7 @@ onMounted(() => {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.6em;
   font-weight: 600;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .section-subtitle {
@@ -390,7 +421,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background: #25D366;
+  background: #25d366;
   color: white;
   border: none;
   display: flex;
@@ -399,7 +430,7 @@ onMounted(() => {
 }
 
 .btn-primary:hover {
-  background: #20BA5A;
+  background: #20ba5a;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
 }
@@ -432,82 +463,82 @@ onMounted(() => {
   .contact-section {
     padding: 4rem 1.5rem;
   }
-  
+
   .section-title {
     font-size: 1.75rem;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
   }
-  
+
   .section-subtitle {
     font-size: 0.95rem;
     margin-bottom: 2.5rem;
     padding: 0 1rem;
   }
-  
+
   .contact-info {
     gap: 0.85rem;
     margin-bottom: 2rem;
   }
-  
+
   .contact-link {
     padding: 0.9rem 1rem;
     gap: 0.85rem;
   }
-  
+
   .contact-icon {
     font-size: 1.3rem;
     width: 36px;
     height: 36px;
   }
-  
+
   .contact-label {
     font-size: 0.7rem;
   }
-  
+
   .contact-value {
     font-size: 0.85rem;
   }
-  
+
   .contact-cta {
     padding: 1.75rem;
   }
-  
+
   .contact-cta h3 {
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
   }
-  
+
   .contact-cta p {
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .form-group {
     margin-bottom: 1rem;
   }
-  
+
   .form-input {
     padding: 0.85rem 1rem;
     font-size: 0.9rem;
   }
-  
+
   .form-input textarea {
     min-height: 90px;
   }
-  
+
   .btn {
     width: 100%;
     padding: 0.9rem 1.5rem;
     font-size: 0.95rem;
   }
-  
+
   .whatsapp-icon {
     font-size: 1rem;
   }

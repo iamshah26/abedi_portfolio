@@ -2,7 +2,7 @@
   <section id="services" class="services-section">
     <div class="container">
       <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        <span class="title-number">02.</span> What I Do
+What I Do
       </h2>
       <p class="section-subtitle" :class="{ 'animate-in': subtitleVisible }">
         I bring ideas to life through code, creativity, and cutting-edge technology

@@ -2,7 +2,7 @@
   <section id="skills" class="skills-section">
     <div class="container">
       <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        <span class="title-number">04.</span> My Skills
+My Skills
       </h2>
       <p class="section-subtitle" :class="{ 'animate-in': subtitleVisible }">
         Technologies and tools I love working with

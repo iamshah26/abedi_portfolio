@@ -37,7 +37,7 @@
               <a href="mailto:haiderabedi26@gmail.com">📧 haiderabedi26@gmail.com</a>
             </li>
             <li>
-              <a href="tel:+923367048278">📱 +92 336 7048278</a>
+              <a href="tel:+923367048278" @click.prevent="handlePhoneClick">📱 +92 336 7048278</a>
             </li>
             <li>
               <a href="https://www.linkedin.com/in/syed-ali-haider-abedi-09a743233/" target="_blank" rel="noopener noreferrer">
@@ -62,8 +62,16 @@
 
 <script setup>
 import { computed } from 'vue'
+import { trackPhoneClick } from '../utils/tracking.js'
 
 const currentYear = computed(() => new Date().getFullYear())
+
+const handlePhoneClick = (event) => {
+  event.preventDefault()
+  trackPhoneClick('tel:+923367048278')
+  // Allow default behavior after tracking (opens phone dialer)
+  window.location.href = 'tel:+923367048278'
+}
 </script>
 
 <style scoped>

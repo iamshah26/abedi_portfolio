@@ -2,7 +2,7 @@
   <section id="about" class="about-section">
     <div class="container">
       <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        <span class="title-number">01.</span> About Me
+About Me
       </h2>
       <div class="about-content" :class="{ 'animate-in': contentVisible }">
         <div class="about-text">

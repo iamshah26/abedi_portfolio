@@ -2,7 +2,7 @@
   <section id="testimonials" class="testimonials-section">
     <div class="container">
       <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        <span class="title-number">07.</span> What People Say
+What People Say
       </h2>
       <p class="section-subtitle" :class="{ 'animate-in': subtitleVisible }">
         Kind words from clients I've had the pleasure to work with
