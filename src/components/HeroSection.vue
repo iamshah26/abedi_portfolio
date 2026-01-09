@@ -54,7 +54,7 @@
         >
           <div class="profile-image-wrapper">
             <img
-              src="/profile.jpeg"
+              src="/profile.png"
               alt="Syed Ali Haider Abedi"
               class="profile-image"
             />
@@ -414,7 +414,8 @@ const typeText = () => {
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
   border-radius: 16px;
 }
