@@ -2,7 +2,10 @@
   <nav class="navbar" :class="{ 'scrolled': isScrolled }">
     <div class="nav-container">
       <div class="nav-logo">
-        <a href="#home">Syed Ali Haider Abedi</a>
+        <a href="#home">
+          <span class="logo-text">SA</span>
+          <span class="logo-full">Syed Ali Haider Abedi</span>
+        </a>
       </div>
       <button class="mobile-menu-toggle" @click="toggleMobileMenu" aria-label="Toggle menu">
         <span></span>
@@ -93,19 +96,54 @@ onUnmounted(() => {
 }
 
 .nav-logo a {
-  font-size: 1.35rem;
-  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.logo-text {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+  letter-spacing: 0;
+}
+
+.logo-full {
+  font-size: 1.2rem;
+  font-weight: 700;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-decoration: none;
   letter-spacing: -0.5px;
   transition: all 0.3s ease;
 }
 
 .nav-logo a:hover {
-  transform: scale(1.02);
+  transform: translateY(-1px);
+}
+
+.nav-logo a:hover .logo-text {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.nav-logo a:hover .logo-full {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .nav-menu {
@@ -221,7 +259,17 @@ onUnmounted(() => {
   }
   
   .nav-logo a {
-    font-size: 1.15rem;
+    gap: 0.6rem;
+  }
+
+  .logo-text {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .logo-full {
+    font-size: 1rem;
   }
 
   .mobile-menu-toggle {

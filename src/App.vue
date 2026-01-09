@@ -22,7 +22,7 @@ import FooterSection from './components/FooterSection.vue'
     <ExperienceSection />
     <ContactSection />
     <FooterSection />
-  </div>
+    </div>
 </template>
 
 <style>

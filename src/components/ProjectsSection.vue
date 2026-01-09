@@ -86,6 +86,16 @@ const projects = ref([
     impact: 'Professional online presence with easy content management',
     link: 'https://landprovidersofficial.com',
     linkText: 'View Website'
+  },
+  {
+    id: 6,
+    title: 'Dr. Hamnah Portfolio',
+    category: 'BDS Doctor Portfolio',
+    solution: 'Professional portfolio website for a BDS (Bachelor of Dental Surgery) doctor with modern design, service showcase, and contact integration.',
+    techStack: ['Vue.js', 'Vite', 'CSS3', 'Responsive Design'],
+    impact: 'Professional online presence for healthcare services with improved patient engagement',
+    link: 'https://dr-hamnah.vercel.app/',
+    linkText: 'View Portfolio'
   }
 ])
 </script>
