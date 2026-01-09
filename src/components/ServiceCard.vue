@@ -1,40 +1,44 @@
 <template>
-  <div 
+  <div
     ref="cardRef"
-    class="service-card" 
+    class="service-card"
     :class="{ 'animate-in': isVisible }"
     :style="{ 'animation-delay': `${props.index * 0.1}s` }"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="service-icon" :class="{ 'animate': isHovered }">
+    <div class="service-icon" :class="{ animate: isHovered }">
       {{ service.icon }}
     </div>
     <h3 class="service-title">{{ service.title }}</h3>
     <p class="service-description">{{ service.description }}</p>
-    
+
     <div class="service-details">
       <div class="detail-item">
         <strong>✨ What I build:</strong>
         <p>{{ service.whatItSolves }}</p>
       </div>
-      
+
       <div class="detail-item">
         <strong>🎯 Perfect for:</strong>
         <p>{{ service.whoItsFor }}</p>
       </div>
-      
+
       <div class="detail-item">
         <strong>💡 Key Benefits:</strong>
         <ul>
-          <li v-for="benefit in service.keyBenefits" :key="benefit">{{ benefit }}</li>
+          <li v-for="benefit in service.keyBenefits" :key="benefit">
+            {{ benefit }}
+          </li>
         </ul>
       </div>
-      
+
       <div class="detail-item">
         <strong>🛠️ Tech Stack:</strong>
         <div class="tools-tags">
-          <span v-for="tool in service.tools" :key="tool" class="tool-tag">{{ tool }}</span>
+          <span v-for="tool in service.tools" :key="tool" class="tool-tag">{{
+            tool
+          }}</span>
         </div>
       </div>
     </div>
@@ -42,39 +46,42 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
   service: {
     type: Object,
-    required: true
+    required: true,
   },
   index: {
     type: Number,
-    default: 0
-  }
-})
+    default: 0,
+  },
+});
 
-const isVisible = ref(true) // Start visible so content shows immediately
-const isHovered = ref(false)
-const cardRef = ref(null)
+const isVisible = ref(true); // Start visible so content shows immediately
+const isHovered = ref(false);
+const cardRef = ref(null);
 
 onMounted(() => {
   // Set up observer for animation when scrolling
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        isVisible.value = true
-      }
-    })
-  }, { threshold: 0.1, rootMargin: '50px' })
-  
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          isVisible.value = true;
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "50px" }
+  );
+
   setTimeout(() => {
     if (cardRef.value) {
-      observer.observe(cardRef.value)
+      observer.observe(cardRef.value);
     }
-  }, 100)
-})
+  }, 100);
+});
 </script>
 
 <style scoped>
@@ -92,7 +99,7 @@ onMounted(() => {
 }
 
 .service-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -142,8 +149,13 @@ onMounted(() => {
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-10px) scale(1.1); }
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.1);
+  }
 }
 
 .service-title {
@@ -204,7 +216,7 @@ onMounted(() => {
 }
 
 .detail-item ul li::before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   left: 0;
   color: #667eea;
@@ -232,7 +244,11 @@ onMounted(() => {
 }
 
 .tool-tag {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
   color: #667eea;
   padding: 0.5rem 1rem;
   border-radius: 20px;
@@ -263,35 +279,35 @@ onMounted(() => {
   .service-card {
     padding: 1.5rem;
   }
-  
+
   .service-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
   }
-  
+
   .service-title {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
   }
-  
+
   .service-description {
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .detail-item {
     margin-bottom: 1.25rem;
   }
-  
+
   .detail-item strong {
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
   }
-  
+
   .detail-item p {
     font-size: 0.85rem;
   }
-  
+
   .tool-tag {
     padding: 0.4rem 0.75rem;
     font-size: 0.8rem;
