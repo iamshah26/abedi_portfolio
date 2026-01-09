@@ -44,7 +44,7 @@
 
       <!-- Video Section -->
       <div class="about-video-section" :class="{ 'animate-in': videoVisible }">
-        <div 
+        <div
           class="video-wrapper"
           @mouseenter="showControls = true"
           @mouseleave="showControls = false"
@@ -55,92 +55,171 @@
             autoplay
             loop
             playsinline
+            preload="metadata"
             class="about-video"
+            @loadedmetadata="onVideoMetadataLoaded"
             @loadeddata="onVideoLoaded"
             @error="onVideoError"
             @play="handlePlay"
             @pause="handlePause"
             @timeupdate="updateProgress"
+            @ended="handleVideoEnded"
             @click="togglePlay"
           >
             <source src="/Developer Portfolio Showcase.mp4" type="video/mp4" />
           </video>
-          
+
           <!-- Center Controls (YouTube Style) -->
-          <div class="video-center-controls" :class="{ 'show': showControls || !isPlaying }">
-            <button @click.stop="skipBackward" class="center-control-btn skip-btn" aria-label="Skip backward 10 seconds">
+          <div
+            class="video-center-controls"
+            :class="{ show: showControls || !isPlaying }"
+          >
+            <button
+              @click.stop="skipBackward"
+              class="center-control-btn skip-btn"
+              aria-label="Skip backward 10 seconds"
+            >
               <svg viewBox="0 0 24 24" fill="white" width="32" height="32">
-                <path d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
-                <path d="M10.5 12l4.5 3v-6l-4.5 3z"/>
+                <path
+                  d="M11.99 5V1l-5 5 5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"
+                />
+                <path d="M10.5 12l4.5 3v-6l-4.5 3z" />
               </svg>
               <span class="skip-label">10</span>
             </button>
-            
-            <button @click.stop="togglePlay" class="center-control-btn play-pause-btn" aria-label="Play/Pause">
-              <svg v-if="isPlaying" viewBox="0 0 24 24" fill="white" width="64" height="64">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+
+            <button
+              @click.stop="togglePlay"
+              class="center-control-btn play-pause-btn"
+              aria-label="Play/Pause"
+            >
+              <svg
+                v-if="isPlaying"
+                viewBox="0 0 24 24"
+                fill="white"
+                width="64"
+                height="64"
+              >
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
               </svg>
-              <svg v-else viewBox="0 0 24 24" fill="white" width="64" height="64">
-                <path d="M8 5v14l11-7z"/>
+              <svg
+                v-else
+                viewBox="0 0 24 24"
+                fill="white"
+                width="64"
+                height="64"
+              >
+                <path d="M8 5v14l11-7z" />
               </svg>
             </button>
-            
-            <button @click.stop="skipForward" class="center-control-btn skip-btn" aria-label="Skip forward 10 seconds">
+
+            <button
+              @click.stop="skipForward"
+              class="center-control-btn skip-btn"
+              aria-label="Skip forward 10 seconds"
+            >
               <svg viewBox="0 0 24 24" fill="white" width="32" height="32">
-                <path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
-                <path d="M13.5 12l-4.5-3v6l4.5-3z"/>
+                <path
+                  d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"
+                />
+                <path d="M13.5 12l-4.5-3v6l4.5-3z" />
               </svg>
               <span class="skip-label">10</span>
             </button>
           </div>
 
           <!-- Bottom Controls Bar (YouTube Style) -->
-          <div class="video-bottom-controls" :class="{ 'show': showControls || !isPlaying }">
+          <div
+            class="video-bottom-controls"
+            :class="{ show: showControls || !isPlaying }"
+          >
             <!-- Progress Bar -->
             <div class="progress-container" @click="seekTo">
               <div class="progress-bar">
-                <div class="progress-filled" :style="{ width: progressPercent + '%' }"></div>
-                <div class="progress-handle" :style="{ left: progressPercent + '%' }"></div>
+                <div
+                  class="progress-filled"
+                  :style="{ width: progressPercent + '%' }"
+                ></div>
+                <div
+                  class="progress-handle"
+                  :style="{ left: progressPercent + '%' }"
+                ></div>
               </div>
             </div>
-            
+
             <!-- Control Buttons -->
             <div class="bottom-controls-row">
               <div class="controls-left">
-                <button @click.stop="togglePlay" class="control-btn" aria-label="Play/Pause">
-                  <svg v-if="isPlaying" viewBox="0 0 24 24" fill="white" width="20" height="20">
-                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                <button
+                  @click.stop="togglePlay"
+                  class="control-btn"
+                  aria-label="Play/Pause"
+                >
+                  <svg
+                    v-if="isPlaying"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    width="20"
+                    height="20"
+                  >
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                   </svg>
-                  <svg v-else viewBox="0 0 24 24" fill="white" width="20" height="20">
-                    <path d="M8 5v14l11-7z"/>
+                  <svg
+                    v-else
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    width="20"
+                    height="20"
+                  >
+                    <path d="M8 5v14l11-7z" />
                   </svg>
                 </button>
-                
-                <button @click.stop="toggleMute" class="control-btn" aria-label="Mute/Unmute">
-                  <svg v-if="!isMuted" viewBox="0 0 24 24" fill="white" width="20" height="20">
-                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+
+                <button
+                  @click.stop="toggleMute"
+                  class="control-btn"
+                  aria-label="Mute/Unmute"
+                >
+                  <svg
+                    v-if="!isMuted"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"
+                    />
                   </svg>
-                  <svg v-else viewBox="0 0 24 24" fill="white" width="20" height="20">
-                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                  <svg
+                    v-else
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"
+                    />
                   </svg>
                 </button>
-                
+
                 <div class="volume-control" @click.stop>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="100" 
-                    :value="volume" 
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    :value="volume"
                     @input="setVolume"
                     class="volume-slider"
                   />
                 </div>
-                
+
                 <div class="time-display">
-                  {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+                  {{ formatTime(currentTime) }}
                 </div>
               </div>
-              
+
               <div class="controls-right">
                 <div class="speed-control">
                   <button
@@ -190,6 +269,10 @@ const duration = ref(0);
 const progressPercent = ref(0);
 const volume = ref(100);
 let controlsTimer = null;
+let durationCheckInterval = null;
+
+// Actual video duration: 2:01 (121 seconds)
+const ACTUAL_VIDEO_DURATION = 125;
 
 const stats = [
   { value: 50, label: "Projects Delivered" },
@@ -261,7 +344,28 @@ onMounted(() => {
     const statsEl = document.querySelector(".about-stats");
     if (statsEl) observer.observe(statsEl);
   }, 500);
+
+  // Monitor video to enforce actual duration limit (2:01)
+  durationCheckInterval = setInterval(() => {
+    if (
+      aboutVideo.value &&
+      aboutVideo.value.currentTime >= ACTUAL_VIDEO_DURATION
+    ) {
+      aboutVideo.value.currentTime = 0;
+      currentTime.value = 0;
+      progressPercent.value = 0;
+    }
+  }, 100); // Check every 100ms
 });
+
+const onVideoMetadataLoaded = () => {
+  // Set actual video duration (2:01 = 121 seconds)
+  // Video metadata may report incorrect duration, so we use the known actual duration
+  duration.value = ACTUAL_VIDEO_DURATION;
+  // Ensure progress starts at 0
+  progressPercent.value = 0;
+  currentTime.value = 0;
+};
 
 const onVideoLoaded = () => {
   // Auto-unmute after video loads
@@ -270,10 +374,10 @@ const onVideoLoaded = () => {
       aboutVideo.value.muted = false;
       isMuted.value = false;
     }, 1000);
+
     // Set initial playback speed
     aboutVideo.value.playbackRate = playbackSpeed.value;
-    // Get video duration
-    duration.value = aboutVideo.value.duration;
+
     // Set initial volume
     aboutVideo.value.volume = volume.value / 100;
   }
@@ -319,35 +423,83 @@ const handlePause = () => {
   isPlaying.value = false;
 };
 
+const handleVideoEnded = () => {
+  // When video reaches actual end (2:01), reset for looping
+  if (aboutVideo.value) {
+    progressPercent.value = 0;
+    currentTime.value = 0;
+    aboutVideo.value.currentTime = 0;
+  }
+};
+
+// Monitor video time to enforce actual duration limit
+const enforceVideoDuration = () => {
+  if (
+    aboutVideo.value &&
+    aboutVideo.value.currentTime >= ACTUAL_VIDEO_DURATION
+  ) {
+    aboutVideo.value.currentTime = 0;
+    currentTime.value = 0;
+    progressPercent.value = 0;
+  }
+};
+
 const updateProgress = () => {
   if (aboutVideo.value) {
-    currentTime.value = aboutVideo.value.currentTime;
-    duration.value = aboutVideo.value.duration || duration.value;
-    if (duration.value > 0) {
-      progressPercent.value = (currentTime.value / duration.value) * 100;
+    // Get current time and clamp it to actual video duration
+    let videoCurrentTime = aboutVideo.value.currentTime;
+
+    // If video time exceeds actual duration, reset it (for looping)
+    if (videoCurrentTime >= ACTUAL_VIDEO_DURATION) {
+      videoCurrentTime = videoCurrentTime % ACTUAL_VIDEO_DURATION;
+      aboutVideo.value.currentTime = videoCurrentTime;
+    }
+
+    currentTime.value = Math.min(videoCurrentTime, ACTUAL_VIDEO_DURATION);
+
+    // Calculate progress using actual video duration
+    if (ACTUAL_VIDEO_DURATION > 0) {
+      progressPercent.value = Math.min(
+        (currentTime.value / ACTUAL_VIDEO_DURATION) * 100,
+        100
+      );
+
+      // Reset progress when video reaches actual end
+      if (currentTime.value >= ACTUAL_VIDEO_DURATION - 0.1) {
+        progressPercent.value = 100;
+      }
     }
   }
 };
 
 const formatTime = (seconds) => {
-  if (!seconds || isNaN(seconds)) return "0:00";
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
+  if (!seconds || isNaN(seconds) || !isFinite(seconds) || seconds < 0)
+    return "0:00";
+  const totalSeconds = Math.floor(seconds);
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
 const skipForward = () => {
   if (aboutVideo.value) {
-    aboutVideo.value.currentTime = Math.min(
-      aboutVideo.value.currentTime + 10,
-      aboutVideo.value.duration
-    );
+    const newTime = aboutVideo.value.currentTime + 10;
+    // Clamp to actual video duration, never exceed it
+    const clampedTime = Math.min(newTime, ACTUAL_VIDEO_DURATION);
+    aboutVideo.value.currentTime = clampedTime;
+    // If at end, loop back to start
+    if (clampedTime >= ACTUAL_VIDEO_DURATION) {
+      aboutVideo.value.currentTime = 0;
+    }
   }
 };
 
 const skipBackward = () => {
   if (aboutVideo.value) {
-    aboutVideo.value.currentTime = Math.max(aboutVideo.value.currentTime - 10, 0);
+    aboutVideo.value.currentTime = Math.max(
+      aboutVideo.value.currentTime - 10,
+      0
+    );
   }
 };
 
@@ -355,8 +507,16 @@ const seekTo = (e) => {
   if (aboutVideo.value && e.target.closest(".progress-container")) {
     const progressBar = e.currentTarget.querySelector(".progress-bar");
     const rect = progressBar.getBoundingClientRect();
-    const percent = (e.clientX - rect.left) / rect.width;
-    aboutVideo.value.currentTime = percent * aboutVideo.value.duration;
+    const percent = Math.min(
+      Math.max((e.clientX - rect.left) / rect.width, 0),
+      1
+    );
+    const seekTime = percent * ACTUAL_VIDEO_DURATION;
+    // Clamp seek time to valid duration range (0 to 2:01)
+    aboutVideo.value.currentTime = Math.min(
+      Math.max(seekTime, 0),
+      ACTUAL_VIDEO_DURATION
+    );
   }
 };
 
@@ -388,6 +548,9 @@ onUnmounted(() => {
   if (observer) observer.disconnect();
   document.removeEventListener("click", handleClickOutside);
   clearTimeout(controlsTimer);
+  if (durationCheckInterval) {
+    clearInterval(durationCheckInterval);
+  }
 });
 </script>
 
@@ -891,7 +1054,7 @@ onUnmounted(() => {
   font-size: 0.875rem;
   font-weight: 500;
   white-space: nowrap;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .speed-control {
