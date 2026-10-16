@@ -1,180 +1,185 @@
 <template>
-  <footer class="footer-section">
+  <footer class="site-footer section-dark">
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-section-col">
-          <h3>Syed Ali Haider Abedi</h3>
-          <p>Digital Solutions Provider</p>
-          <p class="tagline">Building Digital Products That Scale Businesses</p>
+      <div class="footer-top">
+        <div class="footer-brand font-sans">
+          <span class="brand-text">ALI HAIDER<span class="text-vermilion">.</span></span>
+          <span class="brand-sub font-mono">SENIOR FRONTEND ENGINEER &amp; PRODUCT BUILDER</span>
         </div>
-        
-        <div class="footer-section-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+        <button class="back-to-top font-mono" @click="scrollToTop">
+          <span>BACK TO TOP</span>
+          <span class="top-arrow">↑</span>
+        </button>
+      </div>
+
+      <div class="footer-middle font-sans">
+        <div class="footer-col">
+          <span class="col-title font-mono">LOCATION &amp; BASE</span>
+          <p class="col-detail">Lahore, Pakistan<br />Open for Worldwide Remote Engineering</p>
         </div>
-        
-        <div class="footer-section-col">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#services">Web Development</a></li>
-            <li><a href="#services">Mobile Apps</a></li>
-            <li><a href="#services">Digital Marketing</a></li>
-            <li><a href="#services">AI & Automation</a></li>
-            <li><a href="#services">SaaS Platforms</a></li>
-          </ul>
+        <div class="footer-col">
+          <span class="col-title font-mono">CORE DISCIPLINES</span>
+          <p class="col-detail">Angular · TypeScript · RxJS · AI Voice SaaS · Product Design</p>
         </div>
-        
-        <div class="footer-section-col">
-          <h4>Connect</h4>
-          <ul>
-            <li>
-              <a href="mailto:haiderabedi26@gmail.com">📧 haiderabedi26@gmail.com</a>
-            </li>
-            <li>
-              <a href="tel:+923367048278" @click.prevent="handlePhoneClick">📱 +92 336 7048278</a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/syed-ali-haider-abedi-09a743233/" target="_blank" rel="noopener noreferrer">
-                💼 LinkedIn
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/iamshah26" target="_blank" rel="noopener noreferrer">
-                💻 GitHub
-              </a>
-            </li>
-          </ul>
+        <div class="footer-col">
+          <span class="col-title font-mono">VENTURES</span>
+          <p class="col-detail">Co-Founder @ Intevo Solutions<br />Creator of Raahee.pk</p>
+        </div>
+        <div class="footer-col">
+          <span class="col-title font-mono">RESOURCES</span>
+          <div class="footer-links font-mono">
+            <a href="/Syed_Ali_Haider_Abedi_Resume.pdf" target="_blank" download="Syed_Ali_Haider_Abedi_Resume.pdf" class="footer-link">Resume (PDF) ↓</a>
+            <a href="https://github.com/iamshah26" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub ↗</a>
+            <a :href="personalInfo.whatsappUrl" target="_blank" rel="noopener noreferrer" class="footer-link">WhatsApp ↗</a>
+          </div>
         </div>
       </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; {{ currentYear }} Syed Ali Haider Abedi. All rights reserved.</p>
+
+      <div class="footer-bottom font-mono">
+        <span>© 2026 SYED ALI HAIDER ABEDI. ALL RIGHTS RESERVED.</span>
+        <span>BUILT TO PERFORM. DESIGNED TO MATTER.</span>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { trackPhoneClick } from '../utils/tracking.js'
+import { personalInfo } from '../data/portfolio.js';
 
-const currentYear = computed(() => new Date().getFullYear())
-
-const handlePhoneClick = (event) => {
-  event.preventDefault()
-  trackPhoneClick('tel:+923367048278')
-  // Allow default behavior after tracking (opens phone dialer)
-  window.location.href = 'tel:+923367048278'
-}
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 </script>
 
 <style scoped>
-.footer-section {
-  background: #1a1a1a;
-  color: white;
-  padding: 3rem 2rem 1.5rem;
+.site-footer {
+  background: #080808;
+  padding: 5rem 0 3rem;
+  border-top: 1px solid var(--border-on-dark);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-on-dark);
+  margin-bottom: 3rem;
 }
 
-.footer-content {
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.brand-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brand-sub {
+  font-size: 0.72rem;
+  color: var(--text-light-muted);
+  letter-spacing: 0.08em;
+}
+
+.text-vermilion {
+  color: var(--accent-vermilion);
+}
+
+.back-to-top {
+  background: transparent;
+  border: 1px solid var(--border-on-dark-medium);
+  color: var(--text-light-secondary);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.25s ease;
+}
+
+.back-to-top:hover {
+  color: var(--text-light);
+  border-color: var(--accent-vermilion);
+}
+
+.top-arrow {
+  color: var(--accent-vermilion);
+  font-weight: bold;
+}
+
+.footer-middle {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid var(--border-on-dark);
 }
 
-.footer-section-col h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #667eea;
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 
-.footer-section-col h4 {
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: white;
+.col-title {
+  font-size: 0.72rem;
+  color: var(--text-light-muted);
+  letter-spacing: 0.08em;
 }
 
-.footer-section-col p {
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
+.col-detail {
+  font-size: 0.92rem;
+  color: var(--text-light-secondary);
+  line-height: 1.5;
 }
 
-.tagline {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-weight: 500;
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.footer-section-col ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-section-col ul li {
-  margin-bottom: 0.75rem;
-}
-
-.footer-section-col ul li a {
-  color: rgba(255, 255, 255, 0.7);
+.footer-link {
+  color: var(--text-light);
   text-decoration: none;
-  transition: color 0.3s ease;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
 }
 
-.footer-section-col ul li a:hover {
-  color: #667eea;
+.footer-link:hover {
+  color: var(--accent-vermilion);
 }
 
 .footer-bottom {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
+  font-size: 0.72rem;
+  color: var(--text-light-muted);
 }
 
-@media (max-width: 768px) {
-  .footer-section {
-    padding: 2.5rem 1.5rem 1rem;
+@media (max-width: 900px) {
+  .footer-middle {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .footer-content {
+}
+
+@media (max-width: 640px) {
+  .footer-middle {
     grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
   }
-  
-  .footer-section-col h3 {
-    font-size: 1.3rem;
-  }
-  
-  .footer-section-col h4 {
-    font-size: 1rem;
-  }
-  
-  .footer-section-col ul li {
-    margin-bottom: 0.6rem;
-  }
-  
-  .footer-section-col ul li a {
-    font-size: 0.9rem;
-  }
-  
+  .footer-top,
   .footer-bottom {
-    padding-top: 1.5rem;
-    font-size: 0.85rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
   }
 }
 </style>

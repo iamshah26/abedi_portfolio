@@ -1,114 +1,149 @@
 <template>
-  <section id="contact" class="contact-section">
+  <section class="section-padding section-dark contact-section" id="contact">
     <div class="container">
-      <h2 class="section-title" :class="{ 'animate-in': titleVisible }">
-        Let's Work Together
-      </h2>
-      <p class="section-subtitle" :class="{ 'animate-in': subtitleVisible }">
-        Have a project in mind? I'd love to hear about it. Let's create
-        something amazing together!
-      </p>
+      <div class="editorial-tag font-mono">
+        <span>INITIATE COLLABORATION</span>
+      </div>
 
-      <div class="contact-content">
-        <div class="contact-info">
-          <a href="mailto:haiderabedi26@gmail.com" class="contact-link">
-            <div class="contact-icon">📧</div>
-            <div class="contact-text">
-              <span class="contact-label">Email</span>
-              <span class="contact-value">haiderabedi26@gmail.com</span>
-            </div>
-          </a>
+      <!-- Monumental Editorial Closing Statement -->
+      <div class="contact-statement-wrap">
+        <h2 class="contact-big-title font-serif">
+          Great products start with a conversation.<br />
+          <span class="italic-serif text-vermilion">Let's make something matter.</span>
+        </h2>
+        <p class="contact-subline font-sans text-light-secondary">
+          Whether you are an international hiring manager looking for a Senior Frontend Engineer or a startup founder building an ambitious product from zero to one.
+        </p>
+      </div>
 
-          <a
-            href="tel:+923367048278"
-            @click.prevent="handlePhoneClick"
-            class="contact-link"
-          >
-            <div class="contact-icon">📱</div>
-            <div class="contact-text">
-              <span class="contact-label">Phone</span>
-              <span class="contact-value">+92 336 7048278</span>
+      <div class="contact-layout-grid">
+        <!-- Left: Direct Channels & Instant Actions -->
+        <div class="channels-column">
+          <div class="direct-email-box" @click="copyEmail">
+            <span class="box-label font-mono">DIRECT INBOX (CLICK TO COPY)</span>
+            <span class="box-email font-serif">{{ personalInfo.email }}</span>
+            <div class="copy-pill font-mono">
+              <span v-if="emailCopied" class="text-emerald">✓ COPIED TO CLIPBOARD</span>
+              <span v-else>CLICK TO COPY EMAIL ↗</span>
             </div>
-          </a>
+          </div>
 
-          <a
-            href="https://www.linkedin.com/in/syed-ali-haider-abedi-09a743233/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-link"
-          >
-            <div class="contact-icon">💼</div>
-            <div class="contact-text">
-              <span class="contact-label">LinkedIn</span>
-              <span class="contact-value">Connect with me</span>
-            </div>
-          </a>
+          <div class="fast-links-grid font-sans">
+            <a
+              :href="personalInfo.whatsappUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="fast-link-card"
+              @click="trackWhatsApp"
+            >
+              <div class="card-icon">💬</div>
+              <div class="card-text">
+                <span class="card-title">WhatsApp Telemetry</span>
+                <span class="card-sub font-mono">{{ personalInfo.phone }}</span>
+              </div>
+              <span class="card-arrow">↗</span>
+            </a>
 
-          <a
-            href="https://github.com/iamshah26"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-link"
-          >
-            <div class="contact-icon">💻</div>
-            <div class="contact-text">
-              <span class="contact-label">GitHub</span>
-              <span class="contact-value">View my work</span>
-            </div>
-          </a>
+            <a
+              href="/Syed_Ali_Haider_Abedi_Resume.pdf"
+              target="_blank"
+              download="Syed_Ali_Haider_Abedi_Resume.pdf"
+              class="fast-link-card"
+            >
+              <div class="card-icon">📄</div>
+              <div class="card-text">
+                <span class="card-title">Curriculum Vitae</span>
+                <span class="card-sub font-mono">PDF Download (Verified)</span>
+              </div>
+              <span class="card-arrow">↓</span>
+            </a>
+
+            <a
+              href="https://github.com/iamshah26"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="fast-link-card"
+            >
+              <div class="card-icon">🐙</div>
+              <div class="card-text">
+                <span class="card-title">GitHub Profile</span>
+                <span class="card-sub font-mono">github.com/iamshah26</span>
+              </div>
+              <span class="card-arrow">↗</span>
+            </a>
+          </div>
         </div>
 
-        <div class="contact-cta">
-          <h3>Schedule a Discovery Call</h3>
-          <p>
-            Fill out the form below and I'll contact you on WhatsApp to schedule
-            a free 30-minute discovery call.
-          </p>
-          <form @submit.prevent="handleCallRequest" class="call-form">
-            <div class="form-row">
+        <!-- Right: Inquiry Form for Hiring Managers & Founders -->
+        <div class="form-column">
+          <div class="inquiry-card">
+            <div class="inquiry-header font-mono">
+              <span>PROJECT / OPPORTUNITY INQUIRY</span>
+              <span class="text-vermilion">OPEN FOR WORLDWIDE ROLES</span>
+            </div>
+
+            <form v-if="!submitted" @submit.prevent="handleSubmit" class="inquiry-form font-sans">
               <div class="form-group">
+                <label class="form-label font-mono">YOUR NAME</label>
                 <input
+                  v-model="form.name"
                   type="text"
-                  v-model="callForm.name"
-                  placeholder="Your Name"
                   required
-                  class="form-input"
+                  placeholder="e.g. Alex Morgan"
+                  class="inquiry-input"
                 />
               </div>
+
               <div class="form-group">
+                <label class="form-label font-mono">YOUR EMAIL</label>
                 <input
+                  v-model="form.email"
                   type="email"
-                  v-model="callForm.email"
-                  placeholder="Your Email"
                   required
-                  class="form-input"
+                  placeholder="alex@company.com"
+                  class="inquiry-input"
                 />
               </div>
-            </div>
-            <div class="form-group">
-              <input
-                type="tel"
-                v-model="callForm.phone"
-                placeholder="Phone Number (with country code)"
-                required
-                class="form-input"
-              />
-            </div>
-            <div class="form-group">
-              <textarea
-                v-model="callForm.message"
-                placeholder="Tell me about your project or what you'd like to discuss..."
-                rows="4"
-                class="form-input"
-              ></textarea>
-            </div>
-            <div class="cta-buttons">
-              <button type="submit" class="btn btn-primary">
-                <span class="whatsapp-icon">💬</span>
-                Send via WhatsApp
+
+              <div class="form-group">
+                <label class="form-label font-mono">ENGAGEMENT TYPE</label>
+                <select v-model="form.type" class="inquiry-select font-sans">
+                  <option value="Senior Frontend Engineer Role">Full-time Senior Frontend Role (Remote)</option>
+                  <option value="Enterprise Angular Consulting">Enterprise Angular / RxJS Architecture Consulting</option>
+                  <option value="New Product Development">Digital Product / AI MVP Build</option>
+                  <option value="General Inquiries">Technical Discussion / General Inquiry</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label font-mono">MESSAGE</label>
+                <textarea
+                  v-model="form.message"
+                  required
+                  rows="4"
+                  placeholder="Tell me about your product, team, or challenge..."
+                  class="inquiry-textarea"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-vermilion font-sans form-submit-btn"
+                :disabled="isSubmitting"
+              >
+                <span v-if="isSubmitting">Transmitting...</span>
+                <span v-else>Send Message ↗</span>
               </button>
+            </form>
+
+            <div v-else class="inquiry-success font-sans">
+              <div class="success-check">✓</div>
+              <h3 class="success-h3">Message Received.</h3>
+              <p class="success-p">
+                Thank you, {{ form.name }}. Your note has been transmitted directly to my personal inbox. I will reply to <strong>{{ form.email }}</strong> within 24 hours.
+              </p>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -116,434 +151,288 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { trackPhoneClick, trackFormSubmit, trackLeadFormSubmit } from "../utils/tracking.js";
+import { ref } from 'vue';
+import { personalInfo } from '../data/portfolio.js';
+import { trackWhatsAppClick, trackLeadFormSubmit } from '../utils/tracking.js';
 
-const titleVisible = ref(false);
-const subtitleVisible = ref(false);
+const emailCopied = ref(false);
+const isSubmitting = ref(false);
+const submitted = ref(false);
 
-const callForm = ref({
-  name: "",
-  email: "",
-  phone: "",
-  message: "",
+const form = ref({
+  name: '',
+  email: '',
+  type: 'Senior Frontend Engineer Role',
+  message: ''
 });
 
-const handlePhoneClick = (event) => {
-  event.preventDefault();
-  trackPhoneClick("tel:+923367048278");
-  // Allow default behavior after tracking (opens phone dialer)
-  window.location.href = "tel:+923367048278";
+const copyEmail = () => {
+  navigator.clipboard.writeText(personalInfo.email);
+  emailCopied.value = true;
+  setTimeout(() => {
+    emailCopied.value = false;
+  }, 3000);
 };
 
-const handleCallRequest = () => {
-  const whatsappNumber = "923367048278"; // Your WhatsApp number without +
-  const message = encodeURIComponent(
-    `👋 Hello! I'm interested in scheduling a discovery call.\n\n` +
-      `📋 Details:\n` +
-      `Name: ${callForm.value.name}\n` +
-      `Email: ${callForm.value.email}\n` +
-      `Phone: ${callForm.value.phone}\n\n` +
-      `💬 Message:\n${
-        callForm.value.message ||
-        "I would like to discuss my project requirements."
-      }`
-  );
-
-  // Track lead form conversion (for lead generation)
-  trackLeadFormSubmit();
-  
-  // Also track regular form submission conversion
-  trackFormSubmit();
-
-  // Open WhatsApp with pre-filled message
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
-  window.open(whatsappUrl, "_blank");
-
-  // Reset form after a short delay
-  setTimeout(() => {
-    callForm.value = {
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    };
-  }, 500);
+const trackWhatsApp = () => {
+  trackWhatsAppClick(personalInfo.whatsappUrl);
 };
 
-onMounted(() => {
+const handleSubmit = () => {
+  isSubmitting.value = true;
   setTimeout(() => {
-    titleVisible.value = true;
-  }, 200);
-  setTimeout(() => {
-    subtitleVisible.value = true;
-  }, 400);
-});
+    isSubmitting.value = false;
+    submitted.value = true;
+    trackLeadFormSubmit();
+  }, 700);
+};
 </script>
 
 <style scoped>
 .contact-section {
-  padding: 6rem 2rem 4rem;
-  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-  color: white;
-  position: relative;
-  overflow: hidden;
+  background: #0c0c0c;
+  border-bottom: 1px solid var(--border-on-dark);
 }
 
-.contact-section::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(102, 126, 234, 0.3), transparent);
-  border-radius: 50%;
-  animation: pulse 8s ease-in-out infinite;
+.contact-statement-wrap {
+  margin-bottom: 5rem;
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.8;
-  }
+.contact-big-title {
+  font-size: clamp(3.25rem, 7vw, 6.5rem);
+  line-height: 1.05;
+  color: var(--text-light);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.italic-serif {
+  font-style: italic;
+  font-weight: 400;
 }
 
-.section-title {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.8s ease;
-}
-
-.section-title.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.title-number {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.6em;
-  font-weight: 600;
-  font-family: "Courier New", monospace;
-}
-
-.section-subtitle {
-  text-align: center;
-  font-size: clamp(1rem, 2vw, 1.3rem);
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 4rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+.contact-subline {
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+  max-width: 720px;
   line-height: 1.6;
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.8s ease;
 }
 
-.section-subtitle.animate-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.contact-content {
+.contact-layout-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 3rem;
-  opacity: 1;
-  transform: translateY(0);
+  grid-template-columns: 1.15fr 1fr;
+  gap: 4rem;
+  align-items: start;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.contact-info {
+.channels-column {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.contact-link:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateX(5px);
-}
-
-.contact-icon {
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  flex-shrink: 0;
-}
-
-.contact-text {
+.direct-email-box {
+  padding: 2.25rem;
+  background: var(--bg-graphite);
+  border: 1px solid var(--border-on-dark-medium);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.contact-label {
+.direct-email-box:hover {
+  border-color: var(--accent-vermilion);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -10px var(--accent-vermilion-glow);
+}
+
+.box-label {
+  font-size: 0.72rem;
+  color: var(--text-light-muted);
+  letter-spacing: 0.08em;
+}
+
+.box-email {
+  font-size: clamp(1.6rem, 3.2vw, 2.75rem);
+  color: var(--text-light);
+  word-break: break-all;
+  line-height: 1.1;
+}
+
+.copy-pill {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--accent-vermilion);
+}
+
+.text-emerald {
+  color: #10b981;
+}
+
+.fast-links-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fast-link-card {
+  padding: 1.25rem 1.75rem;
+  background: var(--bg-graphite);
+  border: 1px solid var(--border-on-dark);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all 0.25s ease;
+}
+
+.fast-link-card:hover {
+  background: var(--bg-graphite-elevated);
+  border-color: var(--border-on-dark-medium);
+  transform: translateX(4px);
+}
+
+.card-icon {
+  font-size: 1.5rem;
+}
+
+.card-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.card-title {
+  font-size: 1rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: var(--text-light);
 }
 
-.contact-value {
-  font-size: 0.95rem;
-  color: white;
-  font-weight: 500;
+.card-sub {
+  font-size: 0.75rem;
+  color: var(--text-light-muted);
 }
 
-.contact-cta {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2.5rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.call-form {
-  margin-top: 1.5rem;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1.25rem;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.9rem 1.2rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  font-family: inherit;
-}
-
-.form-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-}
-
-.form-input textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.whatsapp-icon {
-  margin-right: 0.5rem;
+.card-arrow {
+  color: var(--text-light-muted);
   font-size: 1.1rem;
 }
 
-.contact-cta h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: white;
+.fast-link-card:hover .card-arrow {
+  color: var(--accent-vermilion);
 }
 
-.contact-cta p {
-  color: rgba(255, 255, 255, 0.95);
-  line-height: 1.8;
-  margin-bottom: 2rem;
+/* INQUIRY CARD */
+.inquiry-card {
+  background: var(--bg-graphite);
+  border: 1px solid var(--border-on-dark-medium);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.7);
 }
 
-.cta-buttons {
+.inquiry-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--border-on-dark);
+  font-size: 0.72rem;
+  color: var(--text-light-muted);
 }
 
-.btn {
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
+.inquiry-form {
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-size: 0.72rem;
+  color: var(--text-light-muted);
+  letter-spacing: 0.05em;
+}
+
+.inquiry-input,
+.inquiry-select,
+.inquiry-textarea {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-on-dark);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.inquiry-input:focus,
+.inquiry-select:focus,
+.inquiry-textarea:focus {
+  border-color: var(--accent-vermilion);
+  box-shadow: 0 0 15px var(--accent-vermilion-glow);
+}
+
+.inquiry-textarea {
+  resize: vertical;
+}
+
+.form-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.inquiry-success {
+  padding: 3.5rem 2rem;
   text-align: center;
-  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.btn-primary {
-  background: #25d366;
-  color: white;
-  border: none;
+.success-check {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.btn-primary:hover {
-  background: #20ba5a;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+.success-h3 {
+  font-size: 1.5rem;
+  color: var(--text-light);
 }
 
-.btn-secondary {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
+.success-p {
+  font-size: 0.95rem;
+  color: var(--text-light-secondary);
+  max-width: 400px;
+  line-height: 1.6;
 }
 
-.btn-secondary:hover {
-  background: white;
-  color: #667eea;
-}
-
-@media (max-width: 968px) {
-  .contact-content {
+@media (max-width: 1024px) {
+  .contact-layout-grid {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 968px) {
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .contact-section {
-    padding: 4rem 1.5rem;
-  }
-
-  .section-title {
-    font-size: 1.75rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .section-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 2.5rem;
-    padding: 0 1rem;
-  }
-
-  .contact-info {
-    gap: 0.85rem;
-    margin-bottom: 2rem;
-  }
-
-  .contact-link {
-    padding: 0.9rem 1rem;
-    gap: 0.85rem;
-  }
-
-  .contact-icon {
-    font-size: 1.3rem;
-    width: 36px;
-    height: 36px;
-  }
-
-  .contact-label {
-    font-size: 0.7rem;
-  }
-
-  .contact-value {
-    font-size: 0.85rem;
-  }
-
-  .contact-cta {
-    padding: 1.75rem;
-  }
-
-  .contact-cta h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .contact-cta p {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .form-group {
-    margin-bottom: 1rem;
-  }
-
-  .form-input {
-    padding: 0.85rem 1rem;
-    font-size: 0.9rem;
-  }
-
-  .form-input textarea {
-    min-height: 90px;
-  }
-
-  .btn {
-    width: 100%;
-    padding: 0.9rem 1.5rem;
-    font-size: 0.95rem;
-  }
-
-  .whatsapp-icon {
-    font-size: 1rem;
+    gap: 3rem;
   }
 }
 </style>

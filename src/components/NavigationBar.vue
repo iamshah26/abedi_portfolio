@@ -1,338 +1,365 @@
 <template>
-  <nav class="navbar" :class="{ 'scrolled': isScrolled }">
-    <div class="nav-container">
-      <div class="nav-logo">
-        <a href="#home">
-          <span class="logo-text">SA</span>
-          <span class="logo-full">Syed Ali Haider Abedi</span>
+  <header
+    class="header-container"
+    :class="{ 'is-floating': isScrolled, 'is-hidden': isHidden }"
+  >
+    <div class="nav-pill" :class="{ 'pill-elevated': isScrolled }">
+      <!-- Left: Monogram / Brand -->
+      <a href="#hero" class="nav-brand font-sans">
+        <span class="brand-title">ALI HAIDER<span class="brand-period">.</span></span>
+      </a>
+
+      <!-- Center: Clean Editorial Links -->
+      <nav class="nav-menu font-sans">
+        <a
+          href="#work"
+          class="nav-link"
+          :class="{ 'is-active': activeSection === 'work' }"
+          @click="closeMobileMenu"
+        >
+          Work
         </a>
+        <a
+          href="#build"
+          class="nav-link"
+          :class="{ 'is-active': activeSection === 'build' }"
+          @click="closeMobileMenu"
+        >
+          Inside the Build
+        </a>
+        <a
+          href="#experience"
+          class="nav-link"
+          :class="{ 'is-active': activeSection === 'experience' }"
+          @click="closeMobileMenu"
+        >
+          Experience
+        </a>
+        <a
+          href="#about"
+          class="nav-link"
+          :class="{ 'is-active': activeSection === 'about' }"
+          @click="closeMobileMenu"
+        >
+          About
+        </a>
+      </nav>
+
+      <!-- Right: Action CTA & Mobile Trigger -->
+      <div class="nav-actions">
+        <a
+          href="#contact"
+          class="btn-nav-talk font-sans"
+        >
+          <span>Let's Talk</span>
+          <span class="talk-arrow">↗</span>
+        </a>
+
+        <!-- Mobile Menu Hamburger -->
+        <button
+          class="mobile-menu-btn"
+          @click="isMobileOpen = !isMobileOpen"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="menu-bar" :class="{ 'bar-top': isMobileOpen }"></span>
+          <span class="menu-bar" :class="{ 'bar-bottom': isMobileOpen }"></span>
+        </button>
       </div>
-      <button class="mobile-menu-toggle" @click="toggleMobileMenu" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-menu" :class="{ 'active': mobileMenuOpen }">
-        <li><a href="#home" @click="closeMobileMenu">Home</a></li>
-        <li><a href="#about" @click="closeMobileMenu">About</a></li>
-        <li class="dropdown">
-          <a href="#services" @click="toggleDropdown">Services <span class="arrow">▼</span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#services" @click="closeMobileMenu">Web Development</a></li>
-            <li><a href="#services" @click="closeMobileMenu">Mobile Apps</a></li>
-            <li><a href="#services" @click="closeMobileMenu">Digital Marketing</a></li>
-            <li><a href="#services" @click="closeMobileMenu">AI & Automation</a></li>
-            <li><a href="#services" @click="closeMobileMenu">SaaS Platforms</a></li>
-          </ul>
-        </li>
-        <li><a href="#projects" @click="closeMobileMenu">Projects</a></li>
-        <li><a href="#experience" @click="closeMobileMenu">Experience</a></li>
-        <li><a href="#contact" @click="closeMobileMenu">Contact</a></li>
-      </ul>
     </div>
-  </nav>
+
+    <!-- Mobile Fullscreen Overlay -->
+    <transition name="mobile-fade">
+      <div v-if="isMobileOpen" class="mobile-overlay font-sans">
+        <div class="mobile-nav-links">
+          <a href="#work" class="mobile-link" @click="closeMobileMenu">Work</a>
+          <a href="#build" class="mobile-link" @click="closeMobileMenu">Inside the Build</a>
+          <a href="#experience" class="mobile-link" @click="closeMobileMenu">Experience</a>
+          <a href="#about" class="mobile-link" @click="closeMobileMenu">About</a>
+          <a href="#contact" class="mobile-link" @click="closeMobileMenu">Contact</a>
+          
+          <div class="mobile-meta">
+            <a
+              href="/Syed_Ali_Haider_Abedi_Resume.pdf"
+              target="_blank"
+              download="Syed_Ali_Haider_Abedi_Resume.pdf"
+              class="mobile-resume-link"
+            >
+              Download Resume (PDF) ↓
+            </a>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue';
 
-const isScrolled = ref(false)
-const mobileMenuOpen = ref(false)
-
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
-}
-
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-}
+const isScrolled = ref(false);
+const isHidden = ref(false);
+const isMobileOpen = ref(false);
+const activeSection = ref('hero');
+let lastScrollY = 0;
 
 const closeMobileMenu = () => {
-  mobileMenuOpen.value = false
-}
+  isMobileOpen.value = false;
+};
 
-const toggleDropdown = (e) => {
-  if (window.innerWidth <= 768) {
-    e.preventDefault()
-    e.target.closest('.dropdown').classList.toggle('open')
+const handleScroll = () => {
+  const currentScrollY = window.scrollY;
+
+  // Transform to floating pill
+  isScrolled.value = currentScrollY > 60;
+
+  // Smart hide on rapid downward scroll, show on scroll up
+  if (currentScrollY > 250 && currentScrollY > lastScrollY + 15) {
+    isHidden.value = true;
+  } else if (currentScrollY < lastScrollY - 8) {
+    isHidden.value = false;
   }
-}
+  lastScrollY = currentScrollY;
+
+  // Determine active section
+  const sections = ['contact', 'about', 'experience', 'build', 'work', 'hero'];
+  for (const id of sections) {
+    const el = document.getElementById(id);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.4) {
+        activeSection.value = id;
+        break;
+      }
+    }
+  }
+};
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-})
+  window.addEventListener('scroll', handleScroll, { passive: true });
+});
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style scoped>
-.navbar {
+.header-container {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
   z-index: 1000;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-}
-
-.navbar.scrolled {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border-bottom-color: rgba(102, 126, 234, 0.15);
-}
-
-.nav-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1.25rem 2rem;
+  padding: 1.5rem 2.5rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-logo a {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.logo-text {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
-  letter-spacing: 0;
+  pointer-events: none;
 }
 
-.logo-full {
-  font-size: 1.2rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
-  transition: all 0.3s ease;
+.header-container.is-floating {
+  padding: 1rem 2.5rem;
 }
 
-.nav-logo a:hover {
-  transform: translateY(-1px);
+.header-container.is-hidden {
+  transform: translateY(-100%);
 }
 
-.nav-logo a:hover .logo-text {
-  transform: scale(1.05) rotate(2deg);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+.nav-pill {
+  pointer-events: auto;
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-logo a:hover .logo-full {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.pill-elevated {
+  background: rgba(20, 20, 20, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  max-width: 980px;
+}
+
+.nav-brand {
+  text-decoration: none;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+}
+
+.brand-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brand-period {
+  color: var(--accent-vermilion);
 }
 
 .nav-menu {
   display: flex;
-  list-style: none;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0;
   align-items: center;
+  gap: 2.25rem;
 }
 
-.nav-menu a {
-  color: #4a5568;
+.nav-link {
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.nav-menu a:hover {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.08);
-}
-
-.nav-menu > li > a.active {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
-}
-
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  background: white;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-  border-radius: 12px;
-  padding: 0.75rem 0;
-  min-width: 220px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  list-style: none;
-  border: 1px solid rgba(102, 126, 234, 0.1);
-}
-
-.dropdown:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-menu li a {
-  display: block;
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
-  color: #4a5568;
   font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light-secondary);
+  transition: color 0.25s ease;
+  position: relative;
+  padding: 0.25rem 0;
 }
 
-.dropdown-menu li a:hover {
-  background: linear-gradient(90deg, rgba(102, 126, 234, 0.08), transparent);
-  color: #667eea;
-  padding-left: 1.75rem;
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--text-light);
 }
 
-.mobile-menu-toggle {
+.nav-link.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--accent-vermilion);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-nav-talk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.25rem;
+  background: var(--accent-vermilion);
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px var(--accent-vermilion-glow);
+}
+
+.btn-nav-talk:hover {
+  background: var(--accent-vermilion-hover);
+  transform: translateY(-1px);
+}
+
+.talk-arrow {
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-nav-talk:hover .talk-arrow {
+  transform: translate(2px, -2px);
+}
+
+.mobile-menu-btn {
   display: none;
   flex-direction: column;
-  background: none;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
   border: none;
   cursor: pointer;
-  gap: 5px;
+  padding: 6px;
 }
 
-.mobile-menu-toggle span {
-  width: 25px;
-  height: 3px;
-  background: #667eea;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+.menu-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-light);
+  transition: transform 0.3s ease;
 }
 
-.mobile-menu-toggle:hover span {
-  background: #764ba2;
+.bar-top {
+  transform: translateY(3.5px) rotate(45deg);
 }
 
-@media (max-width: 968px) {
+.bar-bottom {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 15, 15, 0.97);
+  backdrop-filter: blur(24px);
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  pointer-events: auto;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mobile-link {
+  font-family: var(--font-serif);
+  font-size: 2.75rem;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mobile-link:hover {
+  color: var(--accent-vermilion);
+}
+
+.mobile-meta {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-on-dark);
+}
+
+.mobile-resume-link {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--accent-vermilion);
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
   .nav-menu {
-    gap: 1rem;
+    display: none;
   }
-  
-  .nav-menu a {
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 0;
-  }
-  
-  .nav-container {
-    padding: 1rem 1.5rem;
-  }
-  
-  .nav-logo a {
-    gap: 0.6rem;
-  }
-
-  .logo-text {
-    width: 36px;
-    height: 36px;
-    font-size: 0.95rem;
-  }
-
-  .logo-full {
-    font-size: 1rem;
-  }
-
-  .mobile-menu-toggle {
+  .mobile-menu-btn {
     display: flex;
   }
-
-  .nav-menu {
-    position: fixed;
-    top: 60px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 60px);
-    background: white;
-    flex-direction: column;
-    padding: 2rem 1.5rem;
-    transition: left 0.3s ease;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    align-items: flex-start;
-    gap: 0;
+  .header-container {
+    padding: 1rem;
   }
-  
-  .nav-menu li {
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-
-  .nav-menu a {
-    display: block;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-  }
-
-  .nav-menu.active {
-    left: 0;
-  }
-
-  .dropdown-menu {
-    position: static;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: none;
-    margin: 0.5rem 0 0 0;
-    padding: 0;
-    width: 100%;
-    background: rgba(102, 126, 234, 0.05);
-    border-radius: 8px;
-  }
-
-  .dropdown.open .dropdown-menu {
-    opacity: 1;
-    max-height: 500px;
-    padding: 0.5rem 0;
-  }
-  
-  .dropdown-menu li a {
-    padding-left: 2rem;
-  }
-
-  .arrow {
-    font-size: 0.8rem;
+  .nav-pill {
+    padding: 0.65rem 1.25rem;
   }
 }
 </style>

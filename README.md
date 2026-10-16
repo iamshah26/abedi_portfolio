@@ -1,8 +1,13 @@
+> **Current implementation:** See [EXHIBITION.md](./EXHIBITION.md) for the Worlds I’ve Built experience, local run instructions, architecture, evidence and remaining asset limitations.
+
 # Syed Ali Haider Abedi - Digital Agency Portfolio
+# Ali Haider — World-Class Interactive Senior Frontend Engineer Portfolio
 
 A professional, full-service digital agency style portfolio website built with Vue 3 and Vite.
+An Awwwards-level interactive portfolio for **Syed Ali Haider Abedi (Ali Haider)** — Senior Frontend Engineer, Product Builder, and Co-Founder of Intevo.
 
 ## 🌟 Features
+Built with **Vue 3, Three.js, GSAP, Lenis Smooth Scroll, and Procedural Web Audio**.
 
 - **Modern Design**: Clean, professional design with gradient hero section and smooth animations
 - **Responsive**: Fully responsive design that works on all devices
@@ -16,8 +21,10 @@ A professional, full-service digital agency style portfolio website built with V
   - Client Testimonials
   - Contact section
   - Footer with links and social media
+---
 
 ## 📋 Portfolio Content
+## 🧭 Creative Direction: "Engineering Complexity into Clarity"
 
 All portfolio content has been created and is available in `PORTFOLIO_CONTENT.md` including:
 - Brand positioning and taglines
@@ -27,44 +34,84 @@ All portfolio content has been created and is available in `PORTFOLIO_CONTENT.md
 - Experience details
 - Testimonial samples
 - Contact information
+Combines:
+- **Modern Swiss Architectural & Editorial Brutalism** (inspired by Stefan Vitasovic's stark typography and precision coordinate grids)
+- **Interactive 3D WebGL Viewport** (inspired by Maximilian Berndt's split-screen numbered showcase with dynamic WebGL geometry)
+- **Haute Horlogerie Technical Polish** (real-time Lahore clock, procedural Web Audio haptic feedback, spotlight command palette `Cmd+K`, magnetic cursor)
+- **Authentic Engineering Rigor** (100% verified against official resume; highlights 5,000+ support agents at ibex, Raahee.pk, Intevo Pulse, RxJS, and Angular Signals)
 
 ## 🚀 Getting Started
+---
 
 ### Prerequisites
+## ⚡ Core Engineering Highlights
 
 - Node.js (^20.19.0 || >=22.12.0)
 - npm or yarn
+- **Enterprise Frontend Architecture**: Angular (v2 through v17+), TypeScript, RxJS Observables, NgRx & Angular Signals, SignalR WebSockets, JWT HTTP Interceptors, and SonarQube quality gates.
+- **Interactive 3D WebGL Topology**: Built with Three.js; features real-time procedural iridescent shaders and geometry morphing per project.
+- **Spotlight Command Palette (`Cmd+K` / `Ctrl+K`)**: Instant keyboard-driven navigation for recruiters to jump to projects, download the PDF resume, or copy contacts.
+- **Procedural Audio Synthesizer**: Zero-dependency Web Audio micro-interactions with global mute control.
+- **Cinematic Video Walkthrough**: Custom-engineered video player for `Developer Portfolio Showcase.mp4` with scrubbing, speed control, and accurate duration clipping.
+- **Google Ads Conversion Integration**: Preserves click-to-call, WhatsApp dispatch, and lead submission conversion snippets.
 
 ### Installation
+---
 
 ```sh
 npm install
 ```
+## 📂 Featured Case Studies
 
 ### Development
+1. **Enteract Engage (ibex)** — Omnichannel Enterprise Workspace for 5,000+ support agents (Angular 16+, RxJS, Signals, SignalR).
+2. **Raahee.pk** — Pakistan's Tourism Operating System & Marketplace (Next.js, TypeScript, Supabase, Resend).
+3. **Intevo Pulse & Ops Suite** — AI Voice SaaS Platform & Real-Time Telephony Dashboard (Vue 3, TypeScript, WebSockets).
+4. **TheXperto.com** — On-Demand Services Booking Platform (20+ customer orders fulfilled).
+5. **MICELOC & JetClass (Voltro by Falkenherz)** — Global Hotel & Private Aviation Group Booking Platforms.
 
 Run the development server with hot-reload:
+---
 
 ```sh
 npm run dev
 ```
+## 🛠️ Tech Stack
 
 The site will be available at `http://localhost:5173`
+- **Framework**: Vue 3 (Composition API `<script setup>`)
+- **Build Tool**: Vite 7 (optimized Rollup manual chunking for Three.js and animation engines)
+- **3D & WebGL**: Three.js
+- **Smooth Scroll**: Lenis
+- **Animations**: GSAP & Canvas-Confetti
+- **Typography**: Syne, Space Grotesk, Plus Jakarta Sans, JetBrains Mono
+- **Conversion Tracking**: Google Ads Tag & GA4
 
 ### Build for Production
+---
 
 ```sh
 npm run build
 ```
+## 🚀 Development & Build
 
 ### Preview Production Build
+```bash
+# Install dependencies
+npm install
 
 ```sh
 npm run preview
 ```
+# Run Vite dev server
+npm run dev
 
 ## 📁 Project Structure
+# Build production bundle
+npm run build
 
+# Preview production build
+npm run preview
 ```
 src/
 ├── components/
@@ -145,3 +192,4 @@ This project is private and proprietary.
 ---
 
 **Built with ❤️ for Syed Ali Haider Abedi**
+© 2026 Syed Ali Haider Abedi. All rights reserved.
