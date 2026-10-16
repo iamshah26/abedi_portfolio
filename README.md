@@ -1,3 +1,5 @@
+> **Current review prototype:** See [PROTOTYPE.md](./PROTOTYPE.md) for the personal introduction through Selected Work, current captures, verification and performance limits.
+
 > **Current implementation:** See [EXHIBITION.md](./EXHIBITION.md) for the Worlds I’ve Built experience, local run instructions, architecture, evidence and remaining asset limitations.
 
 # Syed Ali Haider Abedi - Digital Agency Portfolio
