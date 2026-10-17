@@ -30,12 +30,16 @@ export class CameraRig {
     this.posCurve.getPoint(u, this.pos)
     this.targetCurve.getPoint(u, this.target)
     let fov = st.fov
+    // Landscape compositions are authored at 16:10. On narrower landscape screens (4:3, split views) widen
+    // the vertical FOV so the horizontal coverage, and therefore caption/exhibit separation, is preserved.
+    const aspect = this.camera.aspect
+    if (aspect >= 0.9 && aspect < 1.6) fov = MathUtils.radToDeg(2 * Math.atan((Math.tan(MathUtils.degToRad(fov) / 2) * 1.6) / aspect))
 
     if (this.focus > 0 && this.focusPose) {
       const f = this.focus
       this.pos.lerp(this._fp.fromArray(this.focusPose.pos), f)
       this.target.lerp(this._ft.fromArray(this.focusPose.target), f)
-      fov = MathUtils.lerp(fov, this.focusPose.fov, f)
+      fov = MathUtils.lerp(fov, this.focusPose.fov * (aspect >= 0.9 && aspect < 1.6 ? 1.6 / aspect : 1), f)
     }
 
     const k = 1 - Math.exp(-dt * 2.2)

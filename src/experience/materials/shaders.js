@@ -166,7 +166,7 @@ export function dustMaterial(pixelRatio = 1) {
       void main(){ vec3 p = position;
         p.y += sin(uTime * 0.13 + aSeed * 40.) * 0.35; p.x += sin(uTime * 0.07 + aSeed * 13.) * 0.4; p.z += cos(uTime * 0.05 + aSeed * 7.) * 0.3;
         vec4 mv = modelViewMatrix * vec4(p,1.); gl_Position = projectionMatrix * mv;
-        gl_PointSize = uScale * (0.4 + aSeed) / -mv.z; vA = 0.35 + 0.65 * fract(aSeed * 91.7); }`,
+        gl_PointSize = min(uScale * (0.4 + aSeed) / -mv.z, 3.5 * uScale / 22.0); vA = 0.35 + 0.65 * fract(aSeed * 91.7); }`,
     fragmentShader: /* glsl */`
       uniform float uOpacity; uniform vec3 uColor; varying float vA;
       void main(){ float d = length(gl_PointCoord - .5); float a = smoothstep(.5, .0, d) * vA * uOpacity; gl_FragColor = vec4(uColor * a, 1.);

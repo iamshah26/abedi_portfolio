@@ -294,14 +294,25 @@ section, .caption, .identity, .work-title, .k-line, .hud, .cue, .rail { will-cha
 .mobile .person-text p:not(.kicker):last-child { display: none; }
 .mobile .person::before { inset: -60px -24px; background: linear-gradient(to top, rgba(243, 240, 233, 0.95) 60%, rgba(243, 240, 233, 0)); }
 .mobile .final-title { font-size: clamp(2.1rem, 11vw, 3.6rem); }
+.mobile .final::before { content: ''; position: absolute; inset: -70px -24px -40px; background: linear-gradient(to top, rgba(243, 240, 233, 0.94) 62%, rgba(243, 240, 233, 0)); z-index: -1; }
 .mobile .final-note { margin: 16px 0 18px; font-size: var(--step--1); }
 .mobile .colophon { display: none; }
 .mobile .hud { bottom: 12px; }
 .mobile .hud .chapter { display: none; }
+/* Short landscape screens (phones held sideways) */
 @media (max-height: 520px) and (orientation: landscape) {
-  .caption { margin-top: -120px; }
+  .arrival { bottom: 64px; }
+  .arrival .kicker, .where, .cue { display: none; }
+  .role { font-size: 1rem; }
+  .caption { margin-top: -110px; }
   .c-text { display: none; }
+  .rail { display: none; }
   .engineer .timeline { display: none; }
   .person .portrait { display: none; }
+  .person-text p:not(.kicker):last-child { display: none; }
+  .final { bottom: 14px; }
+  .final .kicker, .final-note, .colophon { display: none; }
+  .final-title { font-size: clamp(1.6rem, 5.4vw, 2.6rem); margin-bottom: 14px; }
+  .k-line { font-size: clamp(1.8rem, 6vw, 3.2rem); }
 }
 </style>

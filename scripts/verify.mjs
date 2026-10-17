@@ -26,7 +26,8 @@ async function open({ width, height, mobile = false, reduced = false, hash = '',
   page.on('response', r => { if (r.url().startsWith(BASE) && r.status() >= 400) report.failedRequests.push(`${r.status()} ${r.url()}`) })
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: reduced ? 'reduce' : 'no-preference' }])
   await page.setViewport({ width, height, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1 })
-  await page.goto(`${BASE}${query}${hash}`, { waitUntil: 'networkidle2', timeout: 120000 })
+  const q = query ? query + '&diag' : '?diag'
+  await page.goto(`${BASE}${q}${hash}`, { waitUntil: 'networkidle2', timeout: 120000 })
   return page
 }
 const ready = page => page.waitForFunction(() => window.__experience?.webgl && !document.querySelector('.loader'), { timeout: 120000 })
@@ -144,7 +145,7 @@ try {
     await page.reload({ waitUntil: 'networkidle2' })
     await page.waitForSelector('.case h1', { timeout: 60000 })
     check('refresh keeps the case study', (await page.$eval('.case h1', e => e.textContent)) === 'Intevo Pulse')
-    await page.goto(`${BASE}?quality=low#/work/raahee`, { waitUntil: 'networkidle2' })
+    await page.goto(`${BASE}?quality=low&diag#/work/raahee`, { waitUntil: 'networkidle2' })
     await page.waitForSelector('.case h1')
     await page.click('.case-next .next')
     await page.waitForFunction(() => location.hash === '#/work/intevo-pulse', { timeout: 8000 }).catch(() => {})

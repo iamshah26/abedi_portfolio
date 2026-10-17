@@ -55,9 +55,9 @@ function nameTexture(stacked) {
   if ('letterSpacing' in g) g.letterSpacing = stacked ? '28px' : '40px'
   g.font = `200 ${stacked ? 540 : 470}px "Archivo", "Helvetica Neue", Arial, sans-serif`
   if (stacked) {
-    g.fillText('ALI', 1024, 380)
-    g.fillText('HAIDER', 1024, 1020)
-  } else g.fillText('ALI HAIDER', 2048, 340)
+    g.fillText('ALI', 1024, 380, 1900)
+    g.fillText('HAIDER', 1024, 1020, 1900)
+  } else g.fillText('ALI HAIDER', 2048, 340, 3900)
   const t = new CanvasTexture(c)
   t.colorSpace = SRGBColorSpace
   t.anisotropy = 8
@@ -317,9 +317,9 @@ export class Environment {
     // Gallery follow light rests over the exhibit in view
     if (activeExhibit) {
       this.follow.target.position.lerp(activeExhibit, 0.08)
-      this.follow.position.lerp(new Vector3(activeExhibit.x * 0.6, 9.5, activeExhibit.z + 4), 0.08)
+      this.follow.position.lerp(new Vector3(activeExhibit.x * 0.6, 13.5, activeExhibit.z + 5), 0.08)
     }
-    this.follow.intensity = 150 * st.hall * (1 - P)
+    this.follow.intensity = 260 * st.hall * (1 - P)
 
     // Floor
     if (this.reflector) {
