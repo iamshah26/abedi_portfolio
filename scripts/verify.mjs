@@ -162,7 +162,7 @@ try {
 
   // ---------------------------------------------------------------- Resume and imagery reachable
   const page0 = await browser.newPage()
-  for (const url of ['Syed_Ali_Haider_Abedi_Resume.pdf', 'images/products/raahee.webp', 'images/products/pulse.webp', 'images/products/thexperto.webp', 'images/products/intevo.webp', 'profile.png']) {
+  for (const url of ['Syed_Ali_Haider_Abedi_Resume.pdf', 'images/products/raahee.webp', 'images/products/pulse.webp', 'images/products/thexperto.webp', 'images/products/intevo.webp', 'images/profile.jpeg']) {
     const res = await page0.goto(BASE + url)
     check(`asset reachable: /${url}`, [200, 304].includes(res.status()), `HTTP ${res.status()}`)
   }

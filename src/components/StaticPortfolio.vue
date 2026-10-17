@@ -55,10 +55,10 @@
     </section>
 
     <section id="about" class="s-section s-two" aria-labelledby="s-about">
-      <figure class="s-portrait"><img :src="profile.portrait" alt="Portrait of Ali Haider" width="864" height="1184" loading="lazy" /></figure>
+      <figure class="s-portrait"><img :src="profile.portrait" alt="Portrait of Ali Haider" width="810" height="1080" loading="lazy" /></figure>
       <div>
         <h2 id="s-about" class="mono s-h">05 — The Person</h2>
-        <p class="display s-big">From enterprise to <span class="serif-italic">founder.</span></p>
+        <p class="display s-big">Enterprise engineer, <span class="serif-italic">product founder.</span></p>
         <p v-for="(line, i) in story" :key="i" class="s-soft">{{ line }}</p>
       </div>
     </section>
@@ -125,8 +125,8 @@ const stillSrc = "/images/fold-still.webp"
 .s-timeline { list-style: none; padding: 0; }
 .s-timeline li { display: grid; gap: 4px; padding: 18px 0; border-top: 1px solid var(--line); }
 .s-timeline .mono { color: var(--ink-faint); }
-.s-portrait { max-width: 360px; }
-.s-portrait img { filter: grayscale(1); aspect-ratio: 3 / 4; object-fit: cover; object-position: 38% 20%; }
+.s-portrait { max-width: 360px; aspect-ratio: 3 / 4; overflow: hidden; background: #e6e0d5; }
+.s-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 54% 0%; filter: grayscale(0.85) contrast(1.08); mix-blend-mode: multiply; transform: scale(1.8); transform-origin: 54% 5%; }
 .s-contact { background: var(--porcelain); color: var(--obsidian); padding: clamp(64px, 14vh, 160px) var(--gutter) var(--gutter); }
 .s-final { font-size: clamp(2.4rem, 0.8rem + 6.6vw, 8.6rem); font-weight: 250; letter-spacing: -0.03em; margin: 22px 0 28px; max-width: 14ch; }
 .s-avail { margin-bottom: 30px; color: rgba(13, 13, 17, 0.72); }

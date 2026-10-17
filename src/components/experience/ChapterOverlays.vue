@@ -87,11 +87,11 @@
     <!-- 05 The Person -->
     <section class="person" :style="fade(0.86, 0.875, 0.915, 0.93)" :inert="vis(0.86, 0.875, 0.915, 0.93) ? null : true" aria-labelledby="person-title">
       <figure class="portrait">
-        <img :src="profile.portrait" alt="Portrait of Ali Haider" width="864" height="1184" loading="lazy" decoding="async" />
+        <img :src="profile.portrait" alt="Portrait of Ali Haider" width="810" height="1080" loading="lazy" decoding="async" />
       </figure>
       <div class="person-text">
         <p class="mono kicker">05 — The Person</p>
-        <h2 id="person-title" class="display person-title">From enterprise<br />to <span class="serif-italic">founder.</span></h2>
+        <h2 id="person-title" class="display person-title">Enterprise engineer,<br /><span class="serif-italic">product founder.</span></h2>
         <p v-for="(line, i) in personStory" :key="i">{{ line }}</p>
       </div>
     </section>
@@ -280,9 +280,9 @@ section, .caption, .identity, .work-title, .k-line, .hud, .cue, .rail { will-cha
 /* Person */
 .person { position: absolute; left: var(--gutter); bottom: clamp(80px, 14vh, 150px); display: grid; grid-template-columns: minmax(150px, 230px) minmax(0, 46ch); gap: clamp(24px, 3vw, 48px); align-items: end; color: var(--obsidian); }
 .person::before { content: ''; position: absolute; inset: -80px -100px; background: radial-gradient(closest-side, rgba(243, 240, 233, 0.85), transparent); z-index: -1; }
-.portrait { aspect-ratio: 3 / 4; overflow: hidden; position: relative; background: var(--aubergine); }
-.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 38% 22%; filter: grayscale(1) contrast(1.05); mix-blend-mode: luminosity; transform: scale(1.35); transform-origin: 38% 25%; }
-.portrait::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(185, 167, 232, 0.35), rgba(241, 120, 93, 0.18)); mix-blend-mode: soft-light; }
+.portrait { aspect-ratio: 3 / 4; overflow: hidden; position: relative; background: #e6e0d5; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 54% 0%; filter: grayscale(0.85) contrast(1.08); mix-blend-mode: multiply; transform: scale(2.2); transform-origin: 54% 5%; }
+.portrait::after { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(185, 167, 232, 0.28), rgba(241, 120, 93, 0.16)); mix-blend-mode: soft-light; pointer-events: none; }
 .person .kicker { color: rgba(13, 13, 17, 0.6); }
 .person-title { font-size: clamp(1.8rem, 1rem + 2.8vw, 3.8rem); font-weight: 250; margin-bottom: 18px; }
 .person-title .serif-italic { color: #b4472f; font-stretch: normal; }

@@ -20,7 +20,7 @@ export const profile = {
     github: 'https://github.com/iamshah26',
     resume: '/Syed_Ali_Haider_Abedi_Resume.pdf'
   },
-  portrait: '/profile.png'
+  portrait: '/images/profile.jpeg'
 }
 
 export const contactLinks = [
@@ -33,7 +33,7 @@ export const contactLinks = [
 /** Concise, first-person story used by Chapter 05 and the static portfolio. */
 export const story = [
   'I started in enterprise frontend engineering: large Angular applications where real-time data, security and test discipline are not optional.',
-  'At ibex I built and maintained the Angular frontend of Enteract Engage, the workspace 5,000+ support agents use to answer chat, social and voice conversations from one screen.',
+  'At ibex I build and maintain the Angular frontend of Enteract Engage, the workspace 5,000+ support agents use to answer chat, social and voice conversations from one screen.',
   'Alongside that work I began shipping my own products — Raahee and TheXperto — and co-founded Intevo, where I build the interfaces of products such as Intevo Pulse.',
   'I care about the space between an idea and a working product: the structure, the motion and the details that make software feel considered.'
 ]
@@ -47,10 +47,17 @@ export const expertise = {
 }
 
 /**
- * Timeline. The ibex end date follows the existing portfolio data (Jan 2026); the PDF resume still reads
+ * Timeline. ibex is the current employer (May 2023 — Present, confirmed by Ali, Oct 2026). The PDF resume
  * "Present" and should be refreshed. Intevo carries no start year in public copy until confirmed.
  */
 export const experience = [
+  {
+    id: 'ibex',
+    period: 'May 2023 — Present',
+    role: 'Analyst Software Engineer',
+    org: 'ibex',
+    note: 'Angular frontend of Enteract Engage; KE Listening dashboards; Enteract.Access and Highnoon HRM interfaces.'
+  },
   {
     id: 'intevo',
     period: 'Present',
@@ -64,13 +71,6 @@ export const experience = [
     role: 'Freelance Software Engineer',
     org: 'Independent',
     note: 'Designed and launched Raahee and TheXperto; delivered production interfaces for Intevo Pulse.'
-  },
-  {
-    id: 'ibex',
-    period: 'May 2023 — Jan 2026',
-    role: 'Analyst Software Engineer',
-    org: 'ibex',
-    note: 'Angular frontend of Enteract Engage; KE Listening dashboards; Enteract.Access and Highnoon HRM interfaces.'
   },
   {
     id: 'voltro',
@@ -100,7 +100,7 @@ export const projects = [
     title: 'Enteract Engage',
     kicker: 'Enterprise engineering',
     org: 'ibex',
-    period: 'May 2023 — Jan 2026',
+    period: 'May 2023 — Present',
     role: 'Analyst Software Engineer — Angular frontend',
     accent: '#B9A7E8',
     concept: true,
@@ -109,7 +109,7 @@ export const projects = [
     links: [],
     overview: 'Enteract Engage is an omnichannel customer-engagement workspace. Support agents handle Facebook, Instagram, WhatsApp and live voice interactions from a single screen. It is used by 5,000+ support agents.',
     problem: 'Agents work many conversations at once across very different channels. New chats and calls have to appear immediately, state has to stay consistent while events stream in, and the whole interface has to meet enterprise security and quality standards.',
-    responsibility: 'I built and maintained the Angular frontend of Enteract Engage as part of the engineering team at ibex, and delivered Angular interfaces for related products.',
+    responsibility: 'I build and maintain the Angular frontend of Enteract Engage as part of the engineering team at ibex, and delivered Angular interfaces for related products.',
     features: [
       'Unified agent workspace for Facebook, Instagram, WhatsApp and live voice conversations.',
       'Real-time messaging and voice events, so new chats and calls reach agents without manual page refreshes.',
@@ -320,6 +320,7 @@ export const atAGlance = {
   headline: 'Senior frontend engineer — Angular & TypeScript',
   facts: [
     { label: 'Experience', value: '~4 years of professional software engineering' },
+    { label: 'Currently', value: 'Analyst Software Engineer at ibex · Co-Founder of Intevo' },
     { label: 'Core stack', value: 'Angular, TypeScript, RxJS, NgRx, Signals, SignalR' },
     { label: 'Also', value: 'Next.js, Vue.js, Nuxt.js, Tailwind CSS, Supabase, Node.js' },
     { label: 'Quality', value: 'Jasmine, Karma, Jest, SonarQube, GitLab CI/CD' },
@@ -329,7 +330,7 @@ export const atAGlance = {
     { label: 'Languages', value: 'Urdu (native), English (professional working proficiency)' }
   ],
   highlights: [
-    'Built and maintained the Angular frontend of Enteract Engage, used by 5,000+ support agents.',
+    'Builds and maintains the Angular frontend of Enteract Engage at ibex, used by 5,000+ support agents.',
     'Designed and launched Raahee (30 verified tour operators) and TheXperto (20+ orders).',
     'Co-founder of Intevo; delivered the Intevo Pulse client app, Ops dashboard and product site.'
   ]

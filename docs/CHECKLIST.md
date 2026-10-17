@@ -53,16 +53,14 @@ by `scripts/verify.mjs` or by reviewing rendered frames — not inferred from co
 - [x] Crawlable prerendered case studies, sitemap, robots, Open Graph image (sculpture still), JSON-LD — verified on the production build.
 - [x] Pointer light, idle drift, seam wipe, chapter ticks, per-project reveals, accent beams, warmer hall — idle drift, wipe and ticks verified; light and reveals reviewed visually.
 - [x] Removed 39 MB of unused legacy assets from `public/` and broken prototype scripts.
-- [ ] Real portrait photograph — needs Ali.
+- [x] Real portrait photograph — supplied by Ali (`public/images/profile.jpeg`).
+- [x] ibex confirmed as current employer (May 2023 — Present); copy switched to present tense.
 - [ ] Physical-device testing (iPhone Safari, mid-range Android) — needs hardware.
 - [ ] More verified outcome numbers and real recommendations — needs Ali.
 
 ## Open questions for Ali
-1. ibex end date: copy says **Jan 2026** (earlier portfolio data); the PDF resume still says "May 2023 – Present".
-   Update the resume or confirm the date.
-2. Intevo co-founding year is not stated anywhere verifiable, so public copy omits it.
-3. `public/profile.png` appears AI-generated (Gemini watermark). A real photograph would be better.
-4. TheXperto's tech stack is not on the resume, so the case study lists responsibilities, not technologies.
+1. Intevo co-founding year is not stated anywhere verifiable, so public copy omits it.
+2. TheXperto's tech stack is not on the resume, so the case study lists responsibilities, not technologies.
 
 ## Next tasks
 - Test on physical iOS/Android devices (Safari WebGL2, thermal throttling, URL-bar resizing).

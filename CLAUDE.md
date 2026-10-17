@@ -15,16 +15,17 @@ Durable guidance for future sessions. Read this before changing anything. Deeper
   resume (`public/Syed_Ali_Haider_Abedi_Resume.pdf`) or the live product sites. No invented metrics,
   testimonials or responsibilities. Older docs (`PORTFOLIO_CONTENT.md`, etc.) contain unverified claims —
   do not copy from them.
-- **ibex is a former employer.** Never describe it as current; never explain the departure.
-  End date in copy: Jan 2026 (from earlier portfolio data — the PDF resume still says "Present"; confirm).
+- **ibex is the current employer** (Analyst Software Engineer, May 2023 — Present; confirmed by Ali in
+  Oct 2026, superseding the earlier brief). Ali is also Co-Founder of Intevo. Use present tense for ibex work.
 - **Intevo** = the company (product & technology engineering, theintevo.com). Ali is a **Co-Founder**.
   **Intevo Pulse** = an AI voice product of Intevo (intevopulse.ai, app., ops.). Separate case studies.
   Ali delivered Pulse's client app, Ops dashboard and product site; do NOT claim the AI/telephony/backend.
 - Verified numbers only: 5,000+ Enteract Engage agents; KE Listening across millions of customers;
   Raahee 30 verified operators; TheXperto 20+ orders; supported 3–4 interns at Voltro.
 - Enteract Engage and Voltro visuals are **labelled conceptual illustrations** (`conceptArt.js`).
-- The portrait `public/profile.png` carries a Gemini watermark (AI-generated/edited). It is used small,
-  cropped and duotoned in Chapter 05 only. Replace it with a real photo when available.
+- Portrait: `public/images/profile.jpeg` (real photograph supplied by Ali, white background, 810×1080),
+  cropped to head and shoulders and lightly desaturated in Chapter 05 and the static page. The old
+  `public/profile.png` (AI-generated) is no longer used.
 
 ## Links (verified from the resume PDF)
 Email haiderabedi26@gmail.com · LinkedIn https://linkedin.com/in/syed-ali-haider-abedi-09a743233 ·
@@ -116,5 +117,5 @@ Headless Chrome on this machine reports `prefers-reduced-motion: reduce`; script
 
 ## Status and next tasks
 See `docs/CHECKLIST.md`. Known gaps: no Blender pipeline (all geometry procedural); KTX2/Draco unused
-(no heavy assets yet); portrait is AI-generated; mobile verified in Chrome emulation only, not on a
+(no heavy assets yet); mobile verified in Chrome emulation only, not on a
 physical phone.
