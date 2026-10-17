@@ -9,13 +9,20 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify": "node scripts/verify.mjs",
+    "record:desktop": "node scripts/record.mjs desktop 30",
+    "record:mobile": "node scripts/record.mjs mobile 26",
+    "still": "node scripts/render-still.mjs"
   },
   "dependencies": {
+    "gsap": "^3.15.0",
+    "three": "^0.186.1",
     "vue": "^3.5.26"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
+    "puppeteer-core": "^25.14.0",
     "vite": "^7.3.0",
     "vite-plugin-vue-devtools": "^8.0.5"
   }

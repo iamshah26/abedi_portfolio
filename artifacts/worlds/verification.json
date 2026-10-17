@@ -1,0 +1,147 @@
+{
+  "errors": [],
+  "failedResources": [],
+  "scenes": [
+    {
+      "progress": 0,
+      "camera": [
+        0,
+        0.65,
+        15
+      ],
+      "target": [
+        0,
+        0.2,
+        -1
+      ],
+      "calls": 6,
+      "triangles": 3522,
+      "pixelRatio": 1,
+      "worlds": 2
+    },
+    {
+      "progress": 0.2,
+      "camera": [
+        8.572527594031472e-17,
+        0.65,
+        -17
+      ],
+      "target": [
+        0,
+        0.2,
+        -33
+      ],
+      "calls": 66,
+      "triangles": 3618,
+      "pixelRatio": 1,
+      "worlds": 3
+    },
+    {
+      "progress": 0.4,
+      "camera": [
+        -1.7145055188062944e-16,
+        0.65,
+        -49
+      ],
+      "target": [
+        0,
+        0.2,
+        -65
+      ],
+      "calls": 11,
+      "triangles": 4538,
+      "pixelRatio": 1,
+      "worlds": 4
+    },
+    {
+      "progress": 0.6,
+      "camera": [
+        2.5717582782094415e-16,
+        0.65,
+        -81
+      ],
+      "target": [
+        0,
+        0.2,
+        -97
+      ],
+      "calls": 18,
+      "triangles": 8714,
+      "pixelRatio": 1,
+      "worlds": 5
+    },
+    {
+      "progress": 0.8,
+      "camera": [
+        -3.429011037612589e-16,
+        0.65,
+        -113
+      ],
+      "target": [
+        0,
+        0.2,
+        -129
+      ],
+      "calls": 9,
+      "triangles": 2914,
+      "pixelRatio": 1,
+      "worlds": 6
+    },
+    {
+      "progress": 1,
+      "camera": [
+        7.102951435054648e-16,
+        0.65,
+        -145
+      ],
+      "target": [
+        0,
+        0.2,
+        -161
+      ],
+      "calls": 6,
+      "triangles": 3522,
+      "pixelRatio": 1,
+      "worlds": 6
+    }
+  ],
+  "viewports": [
+    320,
+    360,
+    375,
+    390,
+    430,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "checks": [
+    "camera moves 160 units; reverse scroll restores Pulse camera",
+    "case study opens, retains keyboard focus, closes with Escape",
+    "menu jumps directly to contact",
+    "mobile tap opens case study",
+    "landscape captured at 844 × 390",
+    "reduced motion removes WebGL and exposes all chapters",
+    "WebGL failure preserves projects and contact"
+  ],
+  "performance": {
+    "medianFrameMs": 16.699999999999818,
+    "p95FrameMs": 16.800000000000182,
+    "progress": 0.015796,
+    "camera": [
+      0.7367545921310977,
+      0.65,
+      12.74278335044807
+    ],
+    "target": [
+      0,
+      0.2,
+      -3.5273600000000003
+    ],
+    "calls": 71,
+    "triangles": 5700,
+    "pixelRatio": 1,
+    "worlds": 2
+  }
+}

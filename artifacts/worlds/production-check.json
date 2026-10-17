@@ -1,0 +1,8 @@
+{
+  "errors": [],
+  "failedResources": [],
+  "checks": [
+    "Production lazy-loaded WebGL scene renders",
+    "PDF and favicon load successfully"
+  ]
+}

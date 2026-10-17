@@ -1,0 +1,107 @@
+{
+  "frames": [
+    {
+      "progress": 0,
+      "camera": [
+        0,
+        0.65,
+        15
+      ],
+      "target": [
+        0,
+        0.2,
+        -1
+      ],
+      "calls": 6,
+      "triangles": 3522,
+      "pixelRatio": 1,
+      "worlds": 2
+    },
+    {
+      "progress": 0.040067,
+      "camera": [
+        1.7659090897005283,
+        0.65,
+        9.23677999955686
+      ],
+      "target": [
+        0,
+        0.2,
+        -7.4107199999999995
+      ],
+      "calls": 71,
+      "triangles": 5700,
+      "pixelRatio": 1,
+      "worlds": 2
+    },
+    {
+      "progress": 0.079966,
+      "camera": [
+        2.8526740311871213,
+        0.65,
+        3.251420478101946
+      ],
+      "target": [
+        0,
+        0.2,
+        -13.794559999999999
+      ],
+      "calls": 71,
+      "triangles": 5700,
+      "pixelRatio": 1,
+      "worlds": 2
+    },
+    {
+      "progress": 0.120034,
+      "camera": [
+        2.8526740311871213,
+        0.65,
+        -3.1594595218980546
+      ],
+      "target": [
+        0,
+        0.2,
+        -20.20544
+      ],
+      "calls": 71,
+      "triangles": 5700,
+      "pixelRatio": 1,
+      "worlds": 3
+    },
+    {
+      "progress": 0.159933,
+      "camera": [
+        1.765909089700529,
+        0.65,
+        -9.941780000443138
+      ],
+      "target": [
+        0,
+        0.2,
+        -26.58928
+      ],
+      "calls": 67,
+      "triangles": 3620,
+      "pixelRatio": 1,
+      "worlds": 3
+    },
+    {
+      "progress": 0.2,
+      "camera": [
+        8.572527594031472e-17,
+        0.65,
+        -17
+      ],
+      "target": [
+        0,
+        0.2,
+        -33
+      ],
+      "calls": 66,
+      "triangles": 3618,
+      "pixelRatio": 1,
+      "worlds": 3
+    }
+  ],
+  "raycast": "Passed: clicking the 3D Pulse screen opens its case study"
+}
