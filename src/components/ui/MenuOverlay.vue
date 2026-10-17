@@ -23,6 +23,7 @@
           </ol>
         </nav>
         <nav class="menu-work" aria-label="Case studies">
+          <AtAGlance id="glance" ref="glance" class="menu-glance" />
           <p class="mono menu-kicker">Case studies</p>
           <ul>
             <li v-for="(p, i) in projects" :key="p.id" :style="{ '--i': i + 3 }">
@@ -48,20 +49,29 @@
 import { nextTick, ref } from 'vue'
 import { projects } from '../../data/profile.js'
 import ContactLinks from './ContactLinks.vue'
+import AtAGlance from './AtAGlance.vue'
 
-defineProps({ open: Boolean, mode: String, canCinematic: Boolean })
+const props = defineProps({ open: Boolean, mode: String, canCinematic: Boolean, focusGlance: Boolean })
 const emit = defineEmits(['close', 'navigate', 'switch-mode'])
 const root = ref(null)
 
 const primary = [
   { id: 'journey', label: 'Journey' },
+  { id: 'glance', label: 'At a glance' },
   { id: 'work', label: 'Selected Work' },
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' }
 ]
 
+function showGlance() {
+  const el = root.value?.querySelector('#glance')
+  el?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
+  el?.querySelector('a')?.focus({ preventScroll: true })
+}
+
 function go(id) {
+  if (id === 'glance') return showGlance()
   emit('close')
   nextTick(() => emit('navigate', id))
 }
@@ -69,7 +79,10 @@ function go(id) {
 function focusables() {
   return [...(root.value?.querySelectorAll('a[href], button:not([disabled])') || [])]
 }
-function focusFirst() { focusables()[0]?.focus() }
+function focusFirst() {
+  if (props.focusGlance) return showGlance()
+  focusables()[0]?.focus()
+}
 
 function onKeydown(e) {
   if (e.key === 'Escape') { e.preventDefault(); emit('close'); return }
@@ -145,6 +158,7 @@ ol, ul { list-style: none; padding: 0; }
 .menu-work .kicker { grid-column: 2; color: var(--ink-faint); font-size: var(--step--1); }
 .menu-work a:hover .title, .menu-work a:focus-visible .title { color: var(--persimmon); }
 .menu-foot { margin-top: 36px; display: grid; gap: 22px; }
+.menu-glance { margin-bottom: 40px; scroll-margin-top: 90px; }
 .mode-switch {
   justify-self: start; background: none; border: 0; padding: 10px 0; cursor: pointer; color: var(--ink-soft);
 }

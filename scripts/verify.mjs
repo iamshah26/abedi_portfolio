@@ -126,6 +126,37 @@ try {
     const links = await page.$$eval('.final .contact-links a', as => as.map(a => a.getAttribute('href')))
     check(`${name}: final scene exposes email, LinkedIn, GitHub and resume`, links.length === 4 && links[0].startsWith('mailto:') && links.some(h => h.includes('linkedin.com/in/')) && links.some(h => h.includes('github.com/')) && links.some(h => h.endsWith('.pdf')), links.join(' '))
     await page.screenshot({ path: `${OUT}/frames/${name}-contact.png` })
+    const start = await page.$eval('.final .o-start', a => a.getAttribute('href')).catch(() => '')
+    check(`${name}: "Start a project" opens a prefilled email`, start.startsWith('mailto:haiderabedi26@gmail.com?subject='))
+
+    // Seam wipe appears when the chapter changes
+    await scrollToProgress(page, 0.3)
+    await settle(page, 0.3, 300)
+    check(`${name}: chapter change triggers the seam wipe`, await page.evaluate(() => !!document.querySelector('.seam-wipe')))
+
+    // Engineer chapter: RxJS operator switch recomputes the output stream
+    await scrollToProgress(page, 0.8)
+    await settle(page, 0.8, 1200)
+    await page.click('.engineer .ops button:nth-child(3)')
+    await wait(300)
+    const marbles = await page.evaluate(() => ({ checked: document.querySelector('.engineer .ops button[aria-checked="true"]')?.textContent, out: document.querySelectorAll('.engineer .m.out').length }))
+    check(`${name}: RxJS marble diagram switches operator (debounceTime → 4 outputs)`, marbles.checked === 'debounceTime' && marbles.out === 4, JSON.stringify(marbles))
+
+    if (!mobile) {
+      // Chapter ticks navigate
+      await page.click('.chapter .tick:nth-of-type(3)')
+      await page.waitForFunction(() => Math.abs(window.__experience.progress - 0.515) < 0.01, { timeout: 15000 }).catch(() => {})
+      check('desktop: HUD chapter tick flies to Selected Work', Math.abs((await diag(page)).progress - 0.515) < 0.01)
+      const resume = await page.$eval('.resume-link', a => a.getAttribute('href'))
+      check('desktop: header resume link points to the PDF', resume.endsWith('.pdf'))
+      // Idle drift: the arrival camera orbits after ~6 s without input
+      await scrollToProgress(page, 0)
+      await settle(page, 0, 1500)
+      const a = (await diag(page)).camera
+      await wait(11000)
+      const b = (await diag(page)).camera
+      check('desktop: idle drift moves the arrival camera', dist(a, b) > 0.1, `Δ ${dist(a, b).toFixed(2)} m`)
+    }
     await page.close()
   }
 
@@ -157,6 +188,31 @@ try {
     await page.close()
   }
 
+  // ---------------------------------------------------------------- Recruiter summary route
+  {
+    const page = await open({ width: 1280, height: 800, hash: '#/glance', query: '?quality=low' })
+    await page.waitForSelector('#site-menu #glance', { timeout: 60000 }).catch(() => {})
+    await wait(1200)
+    const g = await page.evaluate(() => { const el = document.querySelector('#site-menu #glance'); if (!el) return null; const r = el.getBoundingClientRect(); return { visible: r.top < innerHeight && r.bottom > 0, resume: el.querySelector('a')?.getAttribute('href') } })
+    check('#/glance opens the recruiter summary with a resume download', g && g.visible && g.resume?.endsWith('.pdf'), JSON.stringify(g))
+    await page.screenshot({ path: `${OUT}/frames/recruiter-summary.png` })
+    await page.close()
+  }
+
+  // ---------------------------------------------------------------- Prerendered case studies (production build only)
+  {
+    const page = await browser.newPage()
+    const res = await page.goto(BASE + 'work/raahee/', { waitUntil: 'domcontentloaded' })
+    const html = res.status() === 200 ? await page.content() : ''
+    if (html.includes('case study · Ali Haider')) {
+      check('prerendered /work/raahee/ has its own title, canonical and OG image', html.includes('<title>Raahee — case study · Ali Haider') && html.includes('rel="canonical"') && html.includes('og:image') && html.includes('application/ld+json'))
+      const sm = await page.goto(BASE + 'sitemap.xml')
+      const xml = sm.status() === 200 ? await sm.text() : ''
+      check('sitemap.xml lists all case studies', ['raahee', 'intevo-pulse', 'enteract-engage', 'thexperto', 'intevo', 'voltro'].every(id => xml.includes(`/work/${id}/`)))
+    } else console.log('SKIP  prerendered pages (dev server; run against vite preview)')
+    await page.close()
+  }
+
   // ---------------------------------------------------------------- Reduced motion → static portfolio
   {
     const page = await open({ width: 1280, height: 800, reduced: true })
@@ -164,6 +220,8 @@ try {
     const ok = await page.evaluate(() => !!document.querySelector('.static .notice') && !document.querySelector('canvas') && document.querySelectorAll('.s-work li').length === 6)
     check('reduced motion shows the accessible static portfolio (no WebGL)', ok)
     await page.screenshot({ path: `${OUT}/frames/reduced-motion.png`, fullPage: false })
+    const ratios = await page.$$eval('.s-media img', imgs => Array.from(imgs).map(i => i.getBoundingClientRect()).map(r => +(r.width / r.height).toFixed(2)))
+    check('static portfolio images keep their 3:2 proportions', ratios.length === 6 && ratios.every(r => Math.abs(r - 1.5) < 0.05), ratios.join(', '))
     await page.click('.s-work li:nth-child(1) a')
     await page.waitForSelector('.case h1')
     check('case studies work without WebGL', (await page.$eval('.case h1', e => e.textContent)) === 'Enteract Engage')

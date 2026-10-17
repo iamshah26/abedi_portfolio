@@ -18,6 +18,8 @@
       </figure>
     </header>
 
+    <div class="s-glance"><AtAGlance uid="static-glance" /></div>
+
     <section id="work" class="s-section" aria-labelledby="s-work">
       <h2 id="s-work" class="mono s-h">03 — Selected Work</h2>
       <ol class="s-work">
@@ -41,6 +43,7 @@
         <p class="display s-big">Angular &amp; TypeScript, <span class="serif-italic">first.</span></p>
         <p class="s-soft">{{ expertise.statement }}</p>
         <p class="s-soft s-also"><span class="mono">Also</span> {{ expertise.additional.join(' · ') }}</p>
+        <RxMarbles class="s-marbles" />
       </div>
       <ol class="s-timeline">
         <li v-for="e in experience" :key="e.id">
@@ -64,6 +67,7 @@
       <p class="mono">06 — Contact</p>
       <h2 id="s-contact" class="display s-final">LET'S MAKE SOMETHING REMARKABLE.</h2>
       <p class="s-avail">{{ profile.availability }}</p>
+      <ClientOffer class="s-offer" />
       <ContactLinks variant="light" />
       <p class="mono colophon">© 2026 {{ profile.fullName }}</p>
     </section>
@@ -75,6 +79,9 @@ import { ref } from 'vue'
 import { expertise, experience, profile, projects, story } from '../data/profile.js'
 import { conceptDataURL } from '../experience/world/conceptArt.js'
 import ContactLinks from './ui/ContactLinks.vue'
+import AtAGlance from './ui/AtAGlance.vue'
+import ClientOffer from './ui/ClientOffer.vue'
+import RxMarbles from './ui/RxMarbles.vue'
 
 defineProps({ notice: String, canCinematic: Boolean })
 defineEmits(['switch-mode'])
@@ -96,6 +103,9 @@ const stillSrc = "/images/fold-still.webp"
 .s-line { font-size: var(--step-2); margin-top: 28px; color: var(--lavender); }
 .s-where { margin-top: 18px; color: var(--ink-soft); max-width: 46ch; }
 .s-still img { width: 100%; height: auto; border: 1px solid var(--line); }
+.s-glance { padding: 0 var(--gutter) clamp(48px, 9vh, 100px); max-width: 980px; }
+.s-marbles { margin-top: 32px; }
+.s-offer { margin-bottom: 36px; }
 .s-section { padding: clamp(56px, 12vh, 140px) var(--gutter); border-top: 1px solid var(--line); }
 .s-h { color: var(--ink-faint); margin-bottom: 32px; font-weight: 400; }
 .s-work { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 64px); }

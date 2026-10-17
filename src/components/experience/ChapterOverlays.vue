@@ -73,6 +73,7 @@
         <p class="mono kicker">04 — The Engineer</p>
         <h2 id="engineer-title" class="display eng-title">Angular &amp; TypeScript,<br /><span class="serif-italic">first.</span></h2>
         <p class="eng-text">{{ expertise.statement }}</p>
+        <RxMarbles class="eng-marbles" :compact="mobile" />
       </div>
       <ol class="timeline">
         <li v-for="item in experience" :key="item.id">
@@ -102,32 +103,56 @@
         <span v-for="(w, i) in finalWords" :key="i" class="fw" :style="finalWordStyle(i)">{{ w }}</span>
       </h2>
       <p class="final-note">{{ profile.availability }}</p>
+      <ClientOffer class="final-offer" :compact="mobile" />
       <ContactLinks variant="light" />
       <p class="mono colophon">© 2026 {{ profile.fullName }} · Lahore · Built with Vue, Three.js and GSAP</p>
     </section>
+
+    <!-- Seam wipe: a persimmon line sweeps across at every chapter change -->
+    <i v-if="wipe.key" :key="wipe.key" class="seam-wipe" :class="{ back: wipe.back }" aria-hidden="true"></i>
 
     <!-- Persistent, minimal HUD -->
     <div class="hud" :style="{ opacity: ready ? 1 - smooth(0.93, 0.95, p) : 0 }">
       <button v-if="p < 0.44" class="mono skip ink-link" type="button" @click="$emit('navigate', 'work')">Skip to Selected Work ↓</button>
       <span v-else></span>
-      <p class="mono chapter" aria-live="polite">
-        <span>{{ frame.chapter.index }} — {{ frame.chapter.label }}</span>
-        <i :style="{ transform: `scaleX(${p})` }"></i>
-      </p>
+      <nav class="chapter" aria-label="Chapters">
+        <span class="mono chapter-label" aria-live="polite">{{ frame.chapter.index }} — {{ frame.chapter.label }}</span>
+        <span class="track-line"><i :style="{ transform: `scaleX(${p})` }"></i></span>
+        <button
+          v-for="ch in CHAPTERS"
+          :key="ch.id"
+          type="button"
+          class="tick"
+          :class="{ on: frame.chapter.id === ch.id, past: p >= ch.start }"
+          :style="{ left: `${ch.start * 100}%` }"
+          :aria-label="`Go to chapter ${ch.index}: ${ch.label}`"
+          @click="$emit('goto', CHAPTER_TARGETS[ch.id])"
+        ><span class="mono tick-tip">{{ ch.index }} {{ ch.label }}</span></button>
+      </nav>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { expertise, experience, profile, projects, story } from '../../data/profile.js'
-import { exhibitProgress, exhibitSide } from '../../experience/navigation.js'
+import { CHAPTERS, exhibitProgress, exhibitSide } from '../../experience/navigation.js'
 import ContactLinks from '../ui/ContactLinks.vue'
+import ClientOffer from '../ui/ClientOffer.vue'
+import RxMarbles from '../ui/RxMarbles.vue'
 
 const props = defineProps({ frame: Object, ready: Boolean, mobile: Boolean })
 defineEmits(['open', 'goto', 'navigate'])
 
 const p = computed(() => props.frame.progress)
+
+const CHAPTER_TARGETS = { arrival: 0, transformation: 0.24, work: 0.515, engineer: 0.8, person: 0.885, contact: 1 }
+const wipe = reactive({ key: 0, back: false })
+watch(() => props.frame.chapter, (now, before) => {
+  if (!props.ready || !before || now === before) return
+  wipe.back = CHAPTERS.indexOf(now) < CHAPTERS.indexOf(before)
+  wipe.key++
+})
 const smooth = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
 const win = (a, b, c, d) => smooth(a, b, p.value) * (1 - smooth(c, d, p.value))
 const vis = (a, b, c, d) => win(a, b, c, d) > 0.5
@@ -239,6 +264,13 @@ section, .caption, .identity, .work-title, .k-line, .hud, .cue, .rail { will-cha
 .eng-title { font-size: clamp(2rem, 1rem + 3.4vw, 4.6rem); font-weight: 250; letter-spacing: -0.02em; }
 .eng-title .serif-italic { color: var(--persimmon); font-stretch: normal; }
 .eng-text { margin-top: 18px; color: var(--ink-soft); max-width: 46ch; }
+.eng-marbles { margin-top: 26px; }
+.eng-intro { position: relative; }
+.eng-intro::before { content: ''; position: absolute; inset: -60px -90px -50px -60px; background: radial-gradient(closest-side, rgba(13, 13, 17, 0.82), rgba(13, 13, 17, 0)); z-index: -1; pointer-events: none; }
+.engineer :deep(button) { pointer-events: auto; }
+.final-offer { margin-bottom: 26px; }
+.mobile .final-offer :deep(.o-items) { display: none; }
+.mobile .final-offer { margin-bottom: 16px; }
 .timeline { list-style: none; padding: 0; }
 .timeline li { display: grid; grid-template-columns: 11.5em 1fr; gap: 2px 16px; padding: 10px 0; border-top: 1px solid var(--line); }
 .t-period { color: var(--ink-faint); grid-row: span 2; padding-top: 2px; }
@@ -268,8 +300,19 @@ section, .caption, .identity, .work-title, .k-line, .hud, .cue, .rail { will-cha
 .hud { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 22px; display: flex; justify-content: space-between; align-items: end; transition: opacity 0.6s; }
 .skip { background: none; border: 0; cursor: pointer; color: var(--ink-soft); padding: 12px 0; }
 .skip:hover { color: var(--porcelain); }
-.chapter { position: relative; color: var(--ink-soft); padding-bottom: 8px; }
-.chapter i { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--persimmon); transform-origin: left; }
+.chapter { position: relative; width: min(340px, 34vw); padding-bottom: 10px; color: var(--ink-soft); text-align: right; }
+.chapter-label { display: block; margin-bottom: 10px; }
+.track-line { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); }
+.track-line i { position: absolute; inset: 0; background: var(--persimmon); transform-origin: left; }
+.tick { position: absolute; bottom: -10px; width: 22px; height: 22px; margin-left: -11px; padding: 0; border: 0; background: none; cursor: pointer; }
+.tick::before { content: ''; position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2px 0 0 -2px; border-radius: 50%; background: var(--titanium); opacity: 0.5; transition: transform 0.3s var(--ease-out), background 0.3s, opacity 0.3s; }
+.tick.past::before { background: var(--persimmon); opacity: 1; }
+.tick.on::before, .tick:hover::before, .tick:focus-visible::before { transform: scale(1.8); opacity: 1; }
+.tick-tip { position: absolute; bottom: 26px; right: 50%; transform: translateX(50%); white-space: nowrap; padding: 6px 9px; background: rgba(13, 13, 17, 0.86); color: var(--porcelain); opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.tick:hover .tick-tip, .tick:focus-visible .tick-tip { opacity: 1; }
+.seam-wipe { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: linear-gradient(90deg, transparent, var(--persimmon) 18%, #ffd2c2 50%, var(--persimmon) 82%, transparent); box-shadow: 0 0 18px 1px rgba(241, 120, 93, 0.55); transform-origin: left; animation: seamWipe 1.1s var(--ease-in-out) forwards; pointer-events: none; }
+.seam-wipe.back { transform-origin: right; }
+@keyframes seamWipe { 0% { transform: scaleX(0); opacity: 1; } 55% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
 
 /* Mobile art direction */
 .mobile .arrival { bottom: 92px; }
@@ -287,6 +330,8 @@ section, .caption, .identity, .work-title, .k-line, .hud, .cue, .rail { will-cha
 .mobile .engineer { grid-template-columns: 1fr; gap: 18px; bottom: 64px; }
 .mobile .engineer::before { inset: -80px -24px -70px; }
 .mobile .eng-text { display: none; }
+.mobile .timeline { display: none; }
+.mobile .eng-marbles { margin-top: 14px; }
 .mobile .timeline li { grid-template-columns: 9.5em 1fr; padding: 6px 0; }
 .mobile .t-org { display: none; }
 .mobile .t-period { grid-row: auto; }
@@ -311,7 +356,7 @@ section, .caption, .identity, .work-title, .k-line, .hud, .cue, .rail { will-cha
   .person .portrait { display: none; }
   .person-text p:not(.kicker):last-child { display: none; }
   .final { bottom: 14px; }
-  .final .kicker, .final-note, .colophon { display: none; }
+  .final .kicker, .final-note, .colophon, .final-offer, .eng-marbles { display: none; }
   .final-title { font-size: clamp(1.6rem, 5.4vw, 2.6rem); margin-bottom: 14px; }
   .k-line { font-size: clamp(1.8rem, 6vw, 3.2rem); }
 }

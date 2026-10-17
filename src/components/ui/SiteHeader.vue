@@ -3,6 +3,8 @@
     <a class="brand" href="#/journey" @click.prevent="$emit('navigate', 'journey')" aria-label="Ali Haider — back to the beginning">
       ALI HAIDER
     </a>
+    <div class="header-right">
+    <a class="resume-link" href="/Syed_Ali_Haider_Abedi_Resume.pdf" target="_blank" rel="noopener noreferrer">RESUME <span aria-hidden="true">↗</span><span class="sr-only"> (PDF, opens in a new tab)</span></a>
     <button
       ref="menuButton"
       class="menu-button"
@@ -14,6 +16,7 @@
       <span class="menu-word">{{ menuOpen ? 'CLOSE' : 'MENU' }}</span>
       <span class="menu-plus" :class="{ open: menuOpen }" aria-hidden="true"></span>
     </button>
+    </div>
   </header>
 </template>
 
@@ -60,6 +63,10 @@ defineExpose({ focusMenuButton: () => menuButton.value?.focus() })
   font-stretch: 125%;
   letter-spacing: 0.22em;
 }
+.header-right { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
+.resume-link { font: 500 var(--step--1) / 1 var(--font-display); font-stretch: 125%; letter-spacing: 0.22em; text-decoration: none; padding: 12px 0; opacity: 0.72; transition: opacity 0.3s; }
+.resume-link:hover, .resume-link:focus-visible { opacity: 1; }
+@media (max-width: 760px) { .resume-link { display: none; } }
 .menu-plus { position: relative; width: 14px; height: 14px; transition: transform 0.6s var(--ease-out); }
 .menu-plus::before, .menu-plus::after {
   content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1.5px; background: currentColor;

@@ -25,7 +25,7 @@ export class CameraRig {
     this.n = frames.length
   }
 
-  update(st, dt, time, { parallax = true } = {}) {
+  update(st, dt, time, { parallax = true, drift = 0 } = {}) {
     const u = MathUtils.clamp(st.cam / (this.n - 1), 0, 1)
     this.posCurve.getPoint(u, this.pos)
     this.targetCurve.getPoint(u, this.target)
@@ -40,6 +40,16 @@ export class CameraRig {
       this.pos.lerp(this._fp.fromArray(this.focusPose.pos), f)
       this.target.lerp(this._ft.fromArray(this.focusPose.target), f)
       fov = MathUtils.lerp(fov, this.focusPose.fov * (aspect >= 0.9 && aspect < 1.6 ? 1.6 / aspect : 1), f)
+    }
+
+    // Idle drift: a slow orbit around the look target while the visitor lingers (eased in and out by caller)
+    if (drift > 0.001) {
+      const a = drift * 0.15 * Math.sin(time * 0.11)
+      const dx = this.pos.x - this.target.x, dz = this.pos.z - this.target.z
+      const c = Math.cos(a), s = Math.sin(a)
+      this.pos.x = this.target.x + dx * c - dz * s
+      this.pos.z = this.target.z + dx * s + dz * c
+      this.pos.y += drift * 0.25 * Math.sin(time * 0.07)
     }
 
     const k = 1 - Math.exp(-dt * 2.2)

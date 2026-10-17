@@ -9,6 +9,7 @@
       aria-modal="true"
       :aria-labelledby="`case-title-${project.id}`"
       :style="{ '--accent': project.accent }"
+      :class="`reveal-${REVEALS[project.id] || 'frame'}`"
       tabindex="-1"
       @keydown="onKeydown"
     >
@@ -96,6 +97,7 @@
             </ul>
           </section>
           <p v-else class="mono private-note">Internal enterprise software — no public link.</p>
+          <p v-if="permalink" class="mono permalink">Shareable page: <a class="ink-link" :href="permalink">{{ permalink }}</a></p>
         </div>
 
         <nav class="case-next" aria-label="More case studies">
@@ -113,6 +115,9 @@ import { projects } from '../data/profile.js'
 import { conceptDataURL } from '../experience/world/conceptArt.js'
 
 const props = defineProps({ project: Object })
+
+/** Each project opens with its own reveal, echoing its exhibit's signature object. */
+const REVEALS = { 'enteract-engage': 'channels', raahee: 'horizon', 'intevo-pulse': 'pulse', thexperto: 'fold', intevo: 'keystone', voltro: 'flight' }
 const emit = defineEmits(['close', 'entered', 'leaving'])
 const root = ref(null)
 const scroller = ref(null)
@@ -121,6 +126,8 @@ const backButton = ref(null)
 const idx = computed(() => projects.findIndex(p => p.id === props.project?.id))
 const next = computed(() => projects[(idx.value + 1) % projects.length])
 const prev = computed(() => projects[(idx.value - 1 + projects.length) % projects.length])
+// Prerendered, crawlable copy of this case study (built by scripts/prerender-plugin.mjs)
+const permalink = computed(() => (import.meta.env.PROD && props.project ? `/work/${props.project.id}/` : null))
 const heroSrc = computed(() => (props.project?.concept ? conceptDataURL(props.project.id) : props.project?.image))
 const heroAlt = computed(() => (props.project?.concept ? `Conceptual illustration for ${props.project.title}` : `${props.project?.title} — public home page`))
 
@@ -230,7 +237,7 @@ h2.mono { color: var(--ink-faint); margin-bottom: 18px; font-weight: 400; }
   transition: background 0.4s var(--ease-out), color 0.4s;
 }
 .links a:hover, .links a:focus-visible { background: var(--porcelain); color: var(--obsidian); }
-.private-note { color: var(--ink-faint); }
+.private-note, .permalink { color: var(--ink-faint); text-transform: none; letter-spacing: 0.02em; }
 
 .case-next { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
 .case-next a { display: grid; gap: 8px; padding: clamp(28px, 6vh, 64px) var(--gutter); text-decoration: none; transition: background 0.5s var(--ease-out); }
@@ -244,6 +251,20 @@ h2.mono { color: var(--ink-faint); margin-bottom: 18px; font-weight: 400; }
 .case-enter-from { clip-path: inset(18% 12% 18% 12% round 6px); opacity: 0; }
 .case-leave-to { clip-path: inset(18% 12% 18% 12% round 6px); opacity: 0; }
 .case-enter-to, .case-leave-from { clip-path: inset(0 0 0 0); opacity: 1; }
+
+/* Per-project reveals (both ends of each pair use the same clip-path function so they interpolate) */
+.reveal-channels.case-enter-from { clip-path: inset(0 50% 0 50%); }
+.reveal-channels.case-enter-to { clip-path: inset(0 0 0 0); }
+.reveal-horizon.case-enter-from { clip-path: inset(100% 0 0 0); }
+.reveal-horizon.case-enter-to { clip-path: inset(0 0 0 0); }
+.reveal-pulse.case-enter-from { clip-path: circle(0% at 50% 55%); }
+.reveal-pulse.case-enter-to { clip-path: circle(150% at 50% 55%); }
+.reveal-fold.case-enter-from { clip-path: inset(0 0 100% 0); }
+.reveal-fold.case-enter-to { clip-path: inset(0 0 0 0); }
+.reveal-keystone.case-enter-from { clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); }
+.reveal-keystone.case-enter-to { clip-path: polygon(50% -60%, 160% 50%, 50% 160%, -60% 50%); }
+.reveal-flight.case-enter-from { clip-path: circle(0% at 100% 0%); }
+.reveal-flight.case-enter-to { clip-path: circle(160% at 100% 0%); }
 
 @media (max-width: 760px) {
   .facts, .split, .numbered, .case-gallery { grid-template-columns: 1fr; }

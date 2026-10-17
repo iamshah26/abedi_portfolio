@@ -46,6 +46,17 @@ by `scripts/verify.mjs` or by reviewing rendered frames — not inferred from co
 - [x] Project links and contact links verified in the DOM; resume PDF returns 200.
 - [x] Multiple genuine refinement passes (see `docs/ART_DIRECTION.md` decisions log).
 
+## Review follow-ups (recruiter / client / end-user review)
+- [x] Recruiter summary card + `#/glance` route + header resume link — verified.
+- [x] Client offer and prefilled "Start a project" email — verified.
+- [x] Interactive RxJS marble diagram in the Engineer chapter and static page — verified.
+- [x] Crawlable prerendered case studies, sitemap, robots, Open Graph image (sculpture still), JSON-LD — verified on the production build.
+- [x] Pointer light, idle drift, seam wipe, chapter ticks, per-project reveals, accent beams, warmer hall — idle drift, wipe and ticks verified; light and reveals reviewed visually.
+- [x] Removed 39 MB of unused legacy assets from `public/` and broken prototype scripts.
+- [ ] Real portrait photograph — needs Ali.
+- [ ] Physical-device testing (iPhone Safari, mid-range Android) — needs hardware.
+- [ ] More verified outcome numbers and real recommendations — needs Ali.
+
 ## Open questions for Ali
 1. ibex end date: copy says **Jan 2026** (earlier portfolio data); the PDF resume still says "May 2023 – Present".
    Update the resume or confirm the date.
@@ -57,7 +68,5 @@ by `scripts/verify.mjs` or by reviewing rendered frames — not inferred from co
 - Test on physical iOS/Android devices (Safari WebGL2, thermal throttling, URL-bar resizing).
 - Optional Blender pass: bake ambient occlusion for the Fold and export GLB (Draco) if procedural shading
   ever looks too clean; the procedural pipeline is the current source of truth.
-- Remove unused legacy public assets (`public/review-screenshots/`, `public/Developer Portfolio Showcase.mp4`)
-  once confirmed unneeded — they are shipped with every build.
 - Consider an opt-in ambient score (off by default) only if it is composed for this piece.
 - Deployment has not been done and needs Ali's permission.

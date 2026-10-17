@@ -55,7 +55,9 @@ Instrument Serif italic for expressive accents, Geist Mono for labels.
 src/App.vue                     mode (experience | static), hash routing, menu, case study orchestration
 src/data/profile.js             all public copy (see truthfulness rules)
 src/components/experience/      ExperienceStage (canvas, scroll track, loader, diagnostics), ChapterOverlays
-src/components/                 CaseStudy, StaticPortfolio (accessible fallback), ui/ (header, menu, contact)
+src/components/                 CaseStudy, StaticPortfolio (accessible fallback), ui/ (header, menu, contact,
+                                AtAGlance recruiter card, ClientOffer, RxMarbles operator diagram)
+scripts/prerender-plugin.mjs    build-time crawlable pages /work/<id>/ + sitemap.xml + robots.txt from profile.js
 src/experience/Experience.js    engine: renderer, composer, loop, resize, tiers, context loss, diagnostics
 src/experience/director/        Director (ONE GSAP timeline, duration 1 == progress), keyframes, CameraRig,
                                 ScrollController (ScrollTrigger + damping + flown jumps)
@@ -66,6 +68,15 @@ src/experience/materials/       MaterialLibrary, shaders (seam, cone, floor, sky
 src/experience/core/            PerformanceManager (tiers), toneMapping (toe-free Khronos Neutral)
 src/experience/navigation.js    chapter timing; no three.js import (keeps the static bundle light)
 ```
+
+## Audience features (added after the recruiter/client review)
+- Recruiter: header RESUME link (desktop), "At a glance" card in the menu, shareable `#/glance`.
+- Client: "What we can build together" + "Start a project" prefilled mailto in the finale and static page.
+- Proof of skill: interactive RxJS marble diagram (map/filter/debounceTime/switchMap with real semantics).
+- Discoverability: prerendered case-study pages with canonical, OG image and JSON-LD; Person JSON-LD on /.
+- Motion: pointer-following warm light (desktop, arrival), idle orbit after 6 s at the arrival, persimmon
+  seam wipe on chapter change, clickable HUD chapter ticks, a distinct clip-path reveal per case study,
+  exhibit beams tinted with each project's accent.
 
 ## Animation rules
 - **The Director owns every animated scene value.** Add a track to `TRACKS` in `Director.js`; never tween
@@ -106,5 +117,4 @@ Headless Chrome on this machine reports `prefers-reduced-motion: reduce`; script
 ## Status and next tasks
 See `docs/CHECKLIST.md`. Known gaps: no Blender pipeline (all geometry procedural); KTX2/Draco unused
 (no heavy assets yet); portrait is AI-generated; mobile verified in Chrome emulation only, not on a
-physical phone; legacy files in `public/review-screenshots` and `public/Developer Portfolio Showcase.mp4`
-are unused but still shipped.
+physical phone.

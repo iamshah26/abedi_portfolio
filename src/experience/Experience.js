@@ -45,6 +45,10 @@ export class Experience {
     window.__activeExperience = this
     Object.assign(this, { canvas, track, onFrame, onSelectProject, onFail, debug })
     this.time = 0
+    this.drift = 0
+    this.lastInput = 0
+    this.lastTarget = 0
+    this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
     this.progress = 0
     this.hovered = null
     this.focusedId = null
@@ -89,7 +93,7 @@ export class Experience {
     this.interaction = new Interaction(this.canvas, this.camera, {
       onHover: hit => this.handleHover(hit),
       onSelect: hit => this.handleSelect(hit),
-      onPointer: ndc => this.rig.pointer.copy(ndc)
+      onPointer: ndc => { this.rig.pointer.copy(ndc); this.pointerMoved = true; this.cursorEnergy = 1 }
     })
 
     this.resize(true)
@@ -233,7 +237,13 @@ export class Experience {
     const p = this.progress
     const st = this.director.seek(p)
 
-    this.rig.update(st, dt, t, { parallax: this.interaction.finePointer })
+    // Idle drift only in the arrival chapter, eased so it never snaps.
+    if (Math.abs(this.scroll.target - this.lastTarget) > 1e-4 || this.pointerMoved) { this.lastInput = t; this.pointerMoved = false }
+    this.lastTarget = this.scroll.target
+    const wantDrift = p < 0.03 && t - this.lastInput > 6 && !this.reduced ? 1 : 0
+    this.drift += (wantDrift - this.drift) * (1 - Math.exp(-dt * (wantDrift ? 0.35 : 2.5)))
+    this.rig.update(st, dt, t, { parallax: this.interaction.finePointer, drift: this.drift })
+    this.updateCursorLight(p, dt)
     const active = this.activeExhibit(p)
     this.env.update(st, t, this.camera, active >= 0 ? EXHIBITS[active].position : null)
     this.fold.update(st, t)
@@ -258,6 +268,19 @@ export class Experience {
 
     this.onFrame?.({ progress: p, chapter: chapterAt(p), activeExhibit: active, porcelain: st.porcelain })
     if (this.debug) this.writeDiagnostics(st, active)
+  }
+
+  /** Warm lamp under the pointer, 70% of the way from the camera to the sculpture. Arrival chapter only. */
+  updateCursorLight(p, dt) {
+    const light = this.env.cursor
+    if (!light) return
+    this.cursorEnergy = Math.max(0, (this.cursorEnergy || 0) - dt * 0.25)
+    const weight = Math.max(0, 1 - Math.max(0, p - 0.16) / 0.1)
+    this._ray ||= new Vector3()
+    this._ray.set(this.rig.pointer.x, this.rig.pointer.y, 0.5).unproject(this.camera).sub(this.camera.position).normalize()
+    const d = this.camera.position.distanceTo(this.fold.core.position) * 0.7
+    light.position.copy(this.camera.position).addScaledVector(this._ray, d)
+    light.intensity = 28 * weight * Math.min(1, this.cursorEnergy * 1.5)
   }
 
   activeExhibit(p) {

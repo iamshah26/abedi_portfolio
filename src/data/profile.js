@@ -312,3 +312,43 @@ export const projects = [
 ]
 
 export const projectById = id => projects.find(p => p.id === id)
+
+/**
+ * Recruiter view: the facts a hiring manager needs in under a minute. Every line is from the resume.
+ */
+export const atAGlance = {
+  headline: 'Senior frontend engineer — Angular & TypeScript',
+  facts: [
+    { label: 'Experience', value: '~4 years of professional software engineering' },
+    { label: 'Core stack', value: 'Angular, TypeScript, RxJS, NgRx, Signals, SignalR' },
+    { label: 'Also', value: 'Next.js, Vue.js, Nuxt.js, Tailwind CSS, Supabase, Node.js' },
+    { label: 'Quality', value: 'Jasmine, Karma, Jest, SonarQube, GitLab CI/CD' },
+    { label: 'Based in', value: 'Lahore, Pakistan · PKT (UTC+5)' },
+    { label: 'Looking for', value: 'International remote engineering roles and selected collaborations' },
+    { label: 'Education', value: 'BS Software Engineering, COMSATS University Islamabad (2022)' },
+    { label: 'Languages', value: 'Urdu (native), English (professional working proficiency)' }
+  ],
+  highlights: [
+    'Built and maintained the Angular frontend of Enteract Engage, used by 5,000+ support agents.',
+    'Designed and launched Raahee (30 verified tour operators) and TheXperto (20+ orders).',
+    'Co-founder of Intevo; delivered the Intevo Pulse client app, Ops dashboard and product site.'
+  ]
+}
+
+/** Client view: what Ali can be engaged for, grounded in shipped work. */
+export const offer = {
+  title: 'What we can build together',
+  items: [
+    { title: 'Complex Angular frontends', text: 'Real-time, data-dense enterprise interfaces with reactive state, tests and quality gates.' },
+    { title: 'Products from zero to launch', text: 'Idea to live product — design, build, booking flows, email automation and deployment.' },
+    { title: 'Frontend for AI and SaaS products', text: 'Client apps, operations dashboards and product sites for teams shipping new platforms.' }
+  ],
+  startProject:
+    'mailto:haiderabedi26@gmail.com?subject=' +
+    encodeURIComponent('Project enquiry — via your portfolio') +
+    '&body=' +
+    encodeURIComponent('Hi Ali,\n\nWhat we are building:\n\nTimeline:\n\nHow you could help:\n\nThanks,\n')
+}
+
+/** Canonical public origin, used for share images and prerendered case-study pages. */
+export const SITE_ORIGIN = 'https://abedi-portfolio.vercel.app'

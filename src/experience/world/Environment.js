@@ -1,6 +1,6 @@
 import {
   BackSide, BoxGeometry, BufferGeometry, CanvasTexture, CatmullRomCurve3, Color, CylinderGeometry, DirectionalLight,
-  Float32BufferAttribute, FogExp2, Group, HemisphereLight, InstancedMesh, MathUtils, Matrix4, Mesh, MeshBasicMaterial,
+  Float32BufferAttribute, FogExp2, Group, HemisphereLight, PointLight, InstancedMesh, MathUtils, Matrix4, Mesh, MeshBasicMaterial,
   MeshPhysicalMaterial, Object3D, PlaneGeometry, PMREMGenerator, Points, Quaternion, Scene, SphereGeometry,
   SpotLight, SRGBColorSpace, Vector3, Euler
 } from 'three'
@@ -129,7 +129,7 @@ export class Environment {
     this.group.add(this.stageCone, this.finalCone)
 
     this.colors = {
-      fogDark: C('#0b0b0e'), fogHall: C('#100f14'), fogPorcelain: C('#ece7de'),
+      fogDark: C('#0b0b0e'), fogHall: C('#131011'), fogPorcelain: C('#ece7de'),
       skyTopDark: C('#060608'), skyHorDark: C('#0e0d12'), skyBotDark: C('#050506'),
       skyTopP: C('#f4f1ea'), skyHorP: C('#e9e3d9'), skyBotP: C('#ddd6ca'),
       floorDark: C(palette.obsidian), floorP: C("#d9d2c5"),
@@ -187,6 +187,9 @@ export class Environment {
     this.sweep = new SpotLight(C(palette.persimmon), 140, 0, 0.32, 1, 2)
     this.follow = new SpotLight(C('#fff6ec'), 0, 0, 0.42, 0.9, 2)
     this.follow.position.set(0, 9, -20)
+    // Pointer light (fine pointers only): a warm lamp the visitor can move across the sculpture
+    this.cursor = tier.mobile ? null : new PointLight(C('#ffd8c2'), 0, 10, 2)
+    if (this.cursor) this.group.add(this.cursor)
     this.group.add(this.hemi, this.key, this.key.target, this.rim, this.rim.target, this.sweep, this.sweep.target, this.follow, this.follow.target)
   }
 

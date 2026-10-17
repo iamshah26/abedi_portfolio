@@ -49,7 +49,7 @@ export class Gallery {
       g.add(sig)
 
       // Overhead light cone (fake volumetric) that ignites during the reveal
-      const cone = new Mesh(new CylinderGeometry(0.25, 3.1, 9, 40, 1, true), coneMaterial(i % 3 === 1 ? palette.lavender : palette.porcelain))
+      const cone = new Mesh(new CylinderGeometry(0.25, 3.1, 9, 40, 1, true), coneMaterial(project.accent || palette.porcelain))
       cone.position.set(0, 9 / 2 - 2.6 + 0.35, 0.6)
       cone.renderOrder = 2
       g.add(cone)

@@ -13,6 +13,7 @@
     :open="menuOpen"
     :mode="mode"
     :can-cinematic="webgl"
+    :focus-glance="route.section === 'glance'"
     @close="closeMenu"
     @navigate="navigate"
     @switch-mode="switchMode"
@@ -82,6 +83,7 @@ const headerLight = computed(() => mode.value === 'experience' && porcelain.valu
 
 function closeMenu() {
   menuOpen.value = false
+  if (route.value.section === 'glance') replace('')
   nextTick(() => header.value?.focusMenuButton())
 }
 
@@ -115,6 +117,13 @@ function onCaseLeaving() {
   engine.value?.unfocus()
   openedFromApp = false
 }
+
+// #/glance opens the recruiter summary inside the menu (shareable link for hiring managers)
+watch(() => route.value.section, s => { if (s === 'glance') menuOpen.value = true }, { immediate: true })
+
+// Document title follows the open case study (history entries and tabs stay meaningful)
+const BASE_TITLE = document.title
+watch(activeProject, p => { document.title = p ? `${p.title} — case study · Ali Haider` : BASE_TITLE }, { immediate: true })
 
 // Deep links and menu links to case studies: position the scene behind the overlay.
 watch(() => route.value.project, id => {
